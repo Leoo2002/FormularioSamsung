@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Central de Casos | Samsung eStore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #edf2f7;
+      --surface: #ffffff;
+      --surface-soft: #f3f7fc;
+      --ink: #152433;
+      --muted: #536a80;
+      --primary: #0a4f8f;
+      --primary-strong: #083f73;
+      --primary-soft: #dbe9f7;
+      --accent: #8a5a2f;
+      --accent-soft: #f3e8dc;
+      --border: #d2dce7;
+      --focus: rgba(10, 79, 143, 0.18);
+      --shadow: 0 16px 36px rgba(14, 34, 55, 0.12);
+      --shadow-soft: 0 8px 20px rgba(14, 34, 55, 0.08);
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --radius-sm: 8px;
+      --transition: 220ms cubic-bezier(0.2, 0.6, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 6%, rgba(10, 79, 143, 0.14), transparent 34%),
+        radial-gradient(circle at 88% 100%, rgba(138, 90, 47, 0.1), transparent 38%),
+        linear-gradient(168deg, #f4f7fb 0%, #eef3f8 50%, #e9eff6 100%);
+      min-height: 100vh;
+      padding: 28px 16px 40px;
+      transition: background 320ms ease, color 220ms ease;
+    }
+
+    .app-shell {
+      max-width: 1340px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.55fr 1fr;
+      gap: 20px;
+      animation: fadeInUp 540ms ease-out;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+      opacity: 0.82;
+    }
+
+    .main-panel {
+      padding: 24px;
+      transition: background 280ms ease, border-color 280ms ease, box-shadow 280ms ease;
+    }
+
+    .side-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      animation: fadeInUp 600ms ease-out;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(14, 34, 55, 0.13);
+      border-color: #c7d7e7;
+    }
+
+    .header {
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: clamp(1.45rem, 2.1vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #12273a;
+    }
+
+    .header p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .switch-label {
+      margin: 0 0 8px;
+      font-size: 0.78rem;
+      color: #3f5d7c;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding: 6px;
+      background: var(--surface-soft);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+      transition: background 280ms ease, border-color 280ms ease;
+    }
+
+    .tab-btn {
+      border: 0;
+      border-radius: 9px;
+      padding: 11px 12px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .tab-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #8da1b7;
+      transition: background var(--transition);
+    }
+
+    .tab-btn.active {
+      background: #fff;
+      color: var(--primary);
+      box-shadow: 0 8px 18px rgba(10, 79, 143, 0.18);
+    }
+
+    .tab-btn.active .tab-dot {
+      background: var(--primary);
+    }
+
+    .tab-btn:hover {
+      color: var(--primary);
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .form-view {
+      display: none;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity var(--transition), transform var(--transition);
+    }
+
+    .form-view.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .group-title {
+      margin: 20px 0 10px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #2f4f71;
+      text-transform: uppercase;
+      padding-left: 10px;
+      border-left: 3px solid #b9cbe0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field {
+      grid-column: span 12;
+    }
+
+    .span-4 {
+      grid-column: span 4;
+    }
+
+    .span-6 {
+      grid-column: span 6;
+    }
+
+    .span-8 {
+      grid-column: span 8;
+    }
+
+    .span-3 {
+      grid-column: span 3;
+    }
+
+    .span-2 {
+      grid-column: span 2;
+    }
+
+    label {
+      display: block;
+      margin: 0 0 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #2c4763;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid #c9d6e3;
+      background: linear-gradient(180deg, #ffffff 0%, #fdfefe 100%);
+      color: var(--ink);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      font: inherit;
+      font-size: 0.9rem;
+      outline: 0;
+      transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+    }
+
+    input:hover,
+    select:hover,
+    textarea:hover {
+      border-color: #b8cadd;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 88px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--focus);
+      background: #fff;
+    }
+
+    select:disabled {
+      background: #edf2f7;
+      cursor: not-allowed;
+      color: #708396;
+    }
+
+    .cascade-box {
+      margin-top: 10px;
+      border: 1px solid #c4d7ea;
+      border-left: 4px solid var(--primary);
+      border-radius: 10px;
+      padding: 12px;
+      background: linear-gradient(180deg, #f5f9ff 0%, #f0f6fd 100%);
+    }
+
+    .actions {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition), filter var(--transition);
+      letter-spacing: 0.01em;
+    }
+
+    .btn-primary {
+      background: linear-gradient(130deg, var(--primary) 0%, var(--primary-strong) 100%);
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(10, 79, 143, 0.28);
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .btn-secondary {
+      background: #f2f6fb;
+      color: #2a4460;
+      border: 1px solid #cddae8;
+      min-width: 160px;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      filter: saturate(1.04);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .success {
+      display: none;
+      margin-top: 10px;
+      border-radius: 10px;
+      background: #e3f4ec;
+      border: 1px solid #bfe6d6;
+      color: #145f46;
+      font-size: 0.88rem;
+      padding: 11px;
+      font-weight: 700;
+      animation: fadeInUp 280ms ease-out;
+    }
+
+    .card-head {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, #fcfeff 0%, #f3f8fd 100%);
+    }
+
+    .card-head h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #1d334a;
+    }
+
+    .card-head p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .card-body {
+      padding: 15px 16px 18px;
+    }
+
+    .preview-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .preview-stats {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .preview-stat {
+      font-size: 0.75rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #cedcec;
+      color: #2f4f70;
+      background: #f3f8fd;
+      font-weight: 700;
+      transition: all var(--transition);
+    }
+
+    .preview-stat.is-warning {
+      border-color: #e9b785;
+      background: #fff2e4;
+      color: #8d4e19;
+      box-shadow: 0 0 0 2px rgba(233, 183, 133, 0.22);
+    }
+
+    .preview-tag {
+      background: #eaf3ff;
+      border: 1px solid #bfd8f4;
+      color: #155695;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 5px 10px;
+    }
+
+    .preview-table-wrap {
+      overflow: auto;
+      border: 1px solid #d4e0ec;
+      border-radius: 10px;
+      background: #fbfdff;
+      max-height: 390px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 540px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid #e8eff7;
+      font-size: 0.8rem;
+      vertical-align: top;
+    }
+
+    th {
+      color: #2a4766;
+      background: #f1f7fd;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tr:hover td {
+      background: #f8fbff;
+    }
+
+    td:nth-child(1) {
+      width: 58px;
+      color: #5b6f84;
+      font-weight: 700;
+    }
+
+    td:nth-child(2) {
+      width: 40%;
+      color: #35516f;
+      font-weight: 700;
+    }
+
+    td:nth-child(3) {
+      color: #1e3145;
+      word-break: break-word;
+    }
+
+    tr.row-empty td:nth-child(3) {
+      color: #8a9bae;
+      font-style: italic;
+    }
+
+    .preview-line {
+      margin-top: 10px;
+    }
+
+    .preview-line label {
+      margin-bottom: 6px;
+      display: block;
+      font-size: 0.78rem;
+      color: #496786;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .preview-line textarea {
+      min-height: 72px;
+      background: #f7fbff;
+      font-size: 0.79rem;
+      line-height: 1.35;
+    }
+
+    .helper-list {
+      margin: 0;
+      padding-left: 18px;
+      color: #28425d;
+      display: grid;
+      gap: 8px;
+      font-size: 0.85rem;
+    }
+
+    .helper-list strong {
+      color: #123759;
+    }
+
+    .helper-url {
+      margin-top: 10px;
+      background: #f3f8ff;
+      border: 1px solid #ccdef4;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 0.82rem;
+      color: #2f4d6d;
+      word-break: break-word;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #c6d5e4;
+      border-radius: 999px;
+      border: 2px solid #f1f6fb;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f6fb;
+      border-radius: 999px;
+    }
+
+    body.mode-mktp {
+      --primary: #0a4f8f;
+      --primary-strong: #083f73;
+      --primary-soft: #dbe9f7;
+      --accent: #8a5a2f;
+      --accent-soft: #f3e8dc;
+      background:
+        radial-gradient(circle at 10% 6%, rgba(10, 79, 143, 0.2), transparent 34%),
+        radial-gradient(circle at 88% 100%, rgba(138, 90, 47, 0.14), transparent 38%),
+        linear-gradient(168deg, #eaf2fb 0%, #e2ecf8 52%, #dbe7f4 100%);
+    }
+
+    body.mode-apis {
+      --primary: #b0521e;
+      --primary-strong: #8d3f15;
+      --primary-soft: #fde7d9;
+      --accent: #9a2f2f;
+      --accent-soft: #f8dfdf;
+      background:
+        radial-gradient(circle at 10% 6%, rgba(176, 82, 30, 0.24), transparent 34%),
+        radial-gradient(circle at 88% 100%, rgba(154, 47, 47, 0.2), transparent 38%),
+        linear-gradient(168deg, #fff1e8 0%, #fde7d8 50%, #f9dfce 100%);
+    }
+
+    body.mode-mktp .main-panel {
+      background: linear-gradient(180deg, rgba(194, 219, 246, 0.82) 0%, rgba(232, 242, 254, 0.92) 20%, #ffffff 100%);
+      border-color: #d2dfec;
+      box-shadow: 0 18px 42px rgba(9, 49, 88, 0.13);
+    }
+
+    body.mode-apis .main-panel {
+      background: linear-gradient(180deg, rgba(253, 214, 186, 0.9) 0%, rgba(255, 235, 219, 0.95) 20%, #ffffff 100%);
+      border-color: #e9c8b0;
+      box-shadow: 0 18px 42px rgba(134, 61, 24, 0.16);
+    }
+
+    body.mode-mktp .tabs {
+      background: linear-gradient(180deg, #edf4fd 0%, #f5f8fd 100%);
+      border-color: #d0dff0;
+    }
+
+    body.mode-apis .tabs {
+      background: linear-gradient(180deg, #ffe9db 0%, #fff2e8 100%);
+      border-color: #efcdb3;
+    }
+
+    body.mode-apis .tab-btn.active {
+      color: #9a4213;
+      box-shadow: 0 8px 18px rgba(176, 82, 30, 0.24);
+    }
+
+    body.mode-mktp .tab-btn.active {
+      color: #0a4f8f;
+      box-shadow: 0 8px 18px rgba(10, 79, 143, 0.2);
+    }
+
+    body.mode-mktp .switch-label {
+      color: #3f5d7c;
+    }
+
+    body.mode-apis .switch-label {
+      color: #9a4213;
+    }
+
+    body.mode-apis .group-title {
+      border-left-color: #e1a87f;
+      color: #8a3a11;
+    }
+
+    body.mode-apis .preview-tag {
+      background: #ffe8d8;
+      border-color: #edbf9b;
+      color: #95400f;
+    }
+
+    .helper-url a {
+      color: #0a5aa5;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .helper-url a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 1160px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .side-panel {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .main-panel {
+        padding: 16px;
+      }
+
+      .span-8,
+      .span-6,
+      .span-4,
+      .span-3,
+      .span-2 {
+        grid-column: span 12;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+      }
+
+      .tabs {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body class="mode-mktp">
+  <main class="app-shell">
+    <section class="panel main-panel">
+      <div class="header">
+        <div>
+          <h1>Central Unificada de Consultas</h1>
+          <p>Carga y copia en formato Excel desde un solo lugar.</p>
+        </div>
+      </div>
+
+      <p class="switch-label">Tipo de carga</p>
+      <div class="tabs" role="tablist" aria-label="Tipo de formulario">
+        <button id="tab-mktp" class="tab-btn active" type="button" role="tab" aria-selected="true" data-target="view-mktp"><span class="tab-dot"></span>MKTP</button>
+        <button id="tab-apis" class="tab-btn" type="button" role="tab" aria-selected="false" data-target="view-apis"><span class="tab-dot"></span>APIS / GCIC</button>
+      </div>
+
+      <div id="view-mktp" class="form-view active" data-form="mktp">
+        <div class="group-title">Datos Generales</div>
+        <div class="grid">
+          <div class="field span-4">
+            <label for="mktp_agente">Agente</label>
+            <select id="mktp_agente" data-preview="true">
+              <option value="">Seleccionar...</option>
+              <option value="Sofia Niccolo">Sofia Niccolo</option>
+              <option value="Bruno Urdapilleta">Bruno Urdapilleta</option>
+            </select>
+          </div>
+          <div class="field span-4">
+            <label for="mktp_fecha">Fecha</label>
+            <input id="mktp_fecha" type="date" data-preview="true" />
+          </div>
+          <div class="field span-4">
+            <label for="mktp_ta">TA (Ticket)</label>
+            <input id="mktp_ta" type="number" placeholder="Ej: 1253746497" data-preview="true" />
+          </div>
+
+          <div class="field span-4">
+            <label for="mktp_seller">Seller</label>
+            <select id="mktp_seller" data-preview="true">
+              <option value="">Seleccionar...</option>
+              <option value="BGH">BGH</option>
+              <option value="MIRGOR">MIRGOR</option>
+              <option value="MULTIPOINT">MULTIPOINT</option>
+              <option value="VISUAR">VISUAR</option>
+            </select>
+          </div>
+          <div class="field span-4">
+            <label for="mktp_canal_compra">Canal de compra</label>
+            <select id="mktp_canal_compra" data-preview="true">
+              <option value="">Seleccionar...</option>
+              <option value="AMEX">AMEX</option>
+              <option value="BAPRO">BAPRO</option>
+              <option value="GALICIA">GALICIA</option>
+              <option value="ICBC">ICBC</option>
+              <option value="Sin informar">Sin informar</option>
+            </select>
+          </div>
+          <div class="field span-4">
+            <label for="mktp_estado">Estado del Reclamo</label>
+            <select id="mktp_estado" data-preview="true">
+              <option value="Abierto">Abierto</option>
+              <option value="Resuelto" selected>Resuelto</option>
+              <option value="Cerrado">Cerrado</option>
+            </select>
+          </div>
+
+          <div class="field span-12">
+            <label for="mktp_asunto">Asunto del mail</label>
+            <input id="mktp_asunto" type="text" placeholder="Ej: Reclamo por pedido demorado..." data-preview="true" />
+          </div>
+        </div>
+
+        <div class="group-title">Clasificacion de la Consulta</div>
+        <div class="cascade-box">
+          <div class="grid">
+            <div class="field span-4">
+              <label for="mktp_tipo_solicitud">1. Tipo de Solicitud</label>
+              <select id="mktp_tipo_solicitud" data-preview="true"></select>
+            </div>
+            <div class="field span-4">
+              <label for="mktp_casuistica1">2. Casuistica 1</label>
+              <select id="mktp_casuistica1" data-preview="true" disabled></select>
+            </div>
+            <div class="field span-4">
+              <label for="mktp_casuistica2">3. Casuistica 2</label>
+              <select id="mktp_casuistica2" data-preview="true" disabled></select>
+            </div>
+          </div>
+        </div>
+
+        <div class="group-title">Tiempos y Seguimiento</div>
+        <div class="grid">
+          <div class="field span-4">
+            <label for="mktp_hora_cayo">Cuando cayo</label>
+            <input id="mktp_hora_cayo" type="time" data-preview="true" />
+          </div>
+          <div class="field span-4">
+            <label for="mktp_hora_vi">Lo vi</label>
+            <input id="mktp_hora_vi" type="time" data-preview="true" />
+          </div>
+          <div class="field span-4">
+            <label for="mktp_hora_respondi">Lo respondi</label>
+            <input id="mktp_hora_respondi" type="time" data-preview="true" />
+          </div>
+
+          <div class="field span-6">
+            <label for="mktp_observacion">Observaciones</label>
+            <textarea id="mktp_observacion" rows="3" placeholder="Detalles de la consulta..." data-preview="true"></textarea>
+          </div>
+          <div class="field span-6">
+            <label for="mktp_ultimo_comentario">Ultimo Comentario + Fecha</label>
+            <textarea id="mktp_ultimo_comentario" rows="3" placeholder="Comentarios del seller y fecha..." data-preview="true"></textarea>
+          </div>
+
+          <div class="field span-4">
+            <label for="mktp_revision">Revision (Fecha)</label>
+            <input id="mktp_revision" type="date" data-preview="true" />
+          </div>
+        </div>
+      </div>
+
+      <div id="view-apis" class="form-view" data-form="apis">
+        <div class="group-title">Datos Generales</div>
+        <div class="grid">
+          <div class="field span-4">
+            <label for="apis_ref_pedido">Referencia / Numero del pedido</label>
+            <input id="apis_ref_pedido" type="text" placeholder="Ej: JODVPBDAY / 12345678" data-preview="true" />
+          </div>
+          <div class="field span-4">
+            <label for="apis_n_caso_gcic">N de Caso GCIC</label>
+            <input id="apis_n_caso_gcic" type="number" placeholder="Ej: 1259479636" data-preview="true" />
+          </div>
+          <div class="field span-4">
+            <label for="apis_nombre_cliente">Nombre de Cliente</label>
+            <input id="apis_nombre_cliente" type="text" placeholder="Ej: JUAN PEREZ" data-preview="true" />
+          </div>
+
+          <div class="field span-4">
+            <label for="apis_estado_reclamo">Estado del Reclamo</label>
+            <select id="apis_estado_reclamo" data-preview="true">
+              <option value="Abierto">Abierto</option>
+              <option value="Cerrado" selected>Cerrado</option>
+              <option value="Cerrado Automatico">Cerrado Automatico</option>
+            </select>
+          </div>
+          <div class="field span-4">
+            <label for="apis_agente">Agente</label>
+            <select id="apis_agente" data-preview="true">
+              <option value="">Seleccionar...</option>
+              <option value="Sofia Niccolo">Sofia Niccolo</option>
+              <option value="Bruno Urdapilleta">Bruno Urdapilleta</option>
+            </select>
+          </div>
+          <div class="field span-4">
+            <label for="apis_gcic">GCIC</label>
+            <select id="apis_gcic" data-preview="true">
+              <option value="ABIERTO">ABIERTO</option>
+              <option value="CERRADO" selected>CERRADO</option>
+            </select>
+          </div>
+
+          <div class="field span-3">
+            <label for="apis_fecha_ingreso">Fecha Ingreso Caso</label>
+            <input id="apis_fecha_ingreso" type="date" data-preview="true" />
+          </div>
+          <div class="field span-3">
+            <label for="apis_hora_ingreso">Ingreso Caso (Hora)</label>
+            <input id="apis_hora_ingreso" type="time" data-preview="true" />
+          </div>
+          <div class="field span-3">
+            <label for="apis_fecha_respuesta">Fecha Respuesta</label>
+            <input id="apis_fecha_respuesta" type="date" data-preview="true" />
+          </div>
+          <div class="field span-3">
+            <label for="apis_hora_respuesta">Respuesta Caso (Hora)</label>
+            <input id="apis_hora_respuesta" type="time" data-preview="true" />
+          </div>
+        </div>
+
+        <div class="group-title">Casuistica</div>
+        <div class="cascade-box">
+          <div class="grid">
+            <div class="field span-4">
+              <label for="apis_tipo_solicitud">1. Tipo de Solicitud</label>
+              <select id="apis_tipo_solicitud" data-preview="true"></select>
+            </div>
+            <div class="field span-4">
+              <label for="apis_casuistica1">2. Casuistica 1</label>
+              <select id="apis_casuistica1" data-preview="true" disabled></select>
+            </div>
+            <div class="field span-4">
+              <label for="apis_casuistica2">3. Casuistica 2</label>
+              <select id="apis_casuistica2" data-preview="true" disabled></select>
+            </div>
+          </div>
+        </div>
+
+        <div class="group-title">Seguimiento</div>
+        <div class="grid">
+          <div class="field span-6">
+            <label for="apis_observaciones">Observaciones</label>
+            <textarea id="apis_observaciones" rows="3" placeholder="Detalles del caso..." data-preview="true"></textarea>
+          </div>
+          <div class="field span-6">
+            <label for="apis_ultimo_comentario_seller">Ultimo Comentario de Seller</label>
+            <textarea id="apis_ultimo_comentario_seller" rows="3" placeholder="Comentarios..." data-preview="true"></textarea>
+          </div>
+          <div class="field span-4">
+            <label for="apis_fecha_revision">Fecha de Revision</label>
+            <input id="apis_fecha_revision" type="date" data-preview="true" />
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="btn-copiar" class="btn btn-primary" type="button">Copiar fila para Excel</button>
+        <button id="btn-limpiar" class="btn btn-secondary" type="button">Limpiar formulario activo</button>
+      </div>
+      <div id="success-message" class="success">Datos copiados correctamente. Ve al Excel, selecciona la primera celda vacia de la fila y presiona Ctrl + V.</div>
+    </section>
+
+    <aside class="side-panel">
+      <section class="card">
+        <div class="card-head">
+          <h3>Preview de Salida</h3>
+          <p>Fila previa al pegado en Excel.</p>
+        </div>
+        <div class="card-body">
+          <div class="preview-meta">
+            <span id="preview-mode" class="preview-tag">MKTP | 15 columnas</span>
+            <div class="preview-stats">
+              <span id="preview-filled" class="preview-stat">Completos: 0</span>
+              <span id="preview-empty" class="preview-stat">Pendientes: 15</span>
+            </div>
+          </div>
+          <div class="preview-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Columna Excel</th>
+                  <th>Valor actual</th>
+                </tr>
+              </thead>
+              <tbody id="preview-body"></tbody>
+            </table>
+          </div>
+          <div class="preview-line">
+            <label for="preview-row">Linea lista para pegar</label>
+            <textarea id="preview-row" readonly></textarea>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h3>Ayudamemoria de Pegado</h3>
+          <p>Guia rapida para evitar desfasajes al cargar datos en Seguimiento de Casos MAILS.</p>
+        </div>
+        <div class="card-body">
+          <ol class="helper-list">
+            <li><strong>Abre el Excel:</strong> Seguimiento de Casos MAILS.xlsx desde SharePoint.</li>
+            <li><strong>Elige la pestana correcta:</strong> usa MKTP cuando estes en Formulario MKTP y APIS/GCIC cuando estes en Formulario APIS.</li>
+            <li><strong>Ubicate en la primera celda vacia de la nueva fila:</strong> siempre en la columna 1 del bloque de carga.</li>
+            <li><strong>Pega con Ctrl + V una sola vez:</strong> la fila llega tabulada en 15 columnas.</li>
+            <li><strong>Confirma visualmente:</strong> revisa que Semana, Fecha y Estado queden en sus columnas esperadas.</li>
+            <li><strong>Si algo no coincide:</strong> deshace con Ctrl + Z, corrige en el formulario y vuelve a copiar.</li>
+          </ol>
+          <div class="helper-url">
+            Excel de destino: <a href="https://allusargentina-my.sharepoint.com/:x:/r/personal/camila_balbastro_grupokonecta_com_ar/Documents/Mail/Seguimiento%20de%20Casos%20MAILS.xlsx?d=w2dc8ccf330154ceebe7b42ee4bdeddcc&csf=1&web=1&e=X7FeeP" target="_blank" rel="noopener noreferrer">Abrir Seguimiento de Casos MAILS.xlsx</a>
+          </div>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <script>
+    const cascadeData = {
+      "eStore Preventa": {
+        "Consulta de disponibilidad de producto": ["Solicitud de propuestas/cotizaciones"],
+        "Intercambio (elegibilidad,valor,informacion de cobro,etc)": ["Consulta General Preventa"],
+        "Informacion fiscal (IVA,etc)": ["Consulta Fiscal"]
+      },
+      "eStore Pedidos": {
+        "Problema de pedido (carrito/pago/promocion)": ["Operacion no ingresada en Vtex/Control 2- Revisar"],
+        "Modificacion de pedido (direccion/metodo)": ["Cambio de domicilio"],
+        "Estado de pedido (informacion de envio, cuando se espera la entrega)": ["Pedido sin tracking"],
+        "Retraso en la entrega, producto no entregado aun": ["Plazo de entrega cumplido/retraso en la entrega/ en Andreani figura entregado/siniestro/entrega fallida"],
+        "Articulo entregado incorrecto (diferente al articulo pedido)": ["Producto erroneo"],
+        "El producto entregado esta danado": ["Cambio por falla", "Cambio por rotura", "Cambio por color"],
+        "Articulos faltantes en la entrega": ["Pedidos con faltantes/incompletos"],
+        "Solicitud de factura (copia de factura, etc)": ["Re facturacion/ Nota de credito - Reenvio de comprobante/ factura A -/ Reenvio de factura"],
+        "Problema de Trade In (cobro, demora en el proceso,etc)": ["Todo TI"]
+      },
+      "eStore Canc/Dev": {
+        "Cancelacion de orden": ["Cancelacion de pedido/arrepentimiento"],
+        "Solicitud de devolucion de pedido (reembolso o cambio)": ["Devolucion comercial/falla/rotura"],
+        "Retraso de reembolso (aun no recibido)": ["Nota de credito - devolucion del dinero"],
+        "DESISTE DE LA CANCELACION": ["Solicito la cancelacion pero se arrepiente de la misma"]
+      },
+      "eStore Otros": {
+        "Problemas con Voucher (no funciona, se vuelve a emitir, etc)": ["Reclamos PPC"]
+      }
+    };
+
+    const configs = {
+      mktp: {
+        previewLabel: "MKTP | 15 columnas",
+        defaultValues: {
+          mktp_estado: "Resuelto"
+        },
+        columns: [
+          "Asunto",
+          "TA",
+          "Week",
+          "Fecha",
+          "Cuando cayo",
+          "Lo vi",
+          "Lo respondi",
+          "Estado del Reclamo",
+          "Agente",
+          "Casuistica",
+          "Observaciones",
+          "Ultimo Comentario + Fecha",
+          "Revision",
+          "Canal de compra",
+          "Seller"
+        ]
+      },
+      apis: {
+        previewLabel: "APIS / GCIC | 15 columnas",
+        defaultValues: {
+          apis_estado_reclamo: "Cerrado",
+          apis_gcic: "CERRADO"
+        },
+        columns: [
+          "Referencia/Numero del pedido",
+          "N de Caso GCIC",
+          "Nombre de Cliente",
+          "Estado del Reclamo",
+          "Agente",
+          "GCIC",
+          "Week",
+          "Fecha Ingreso Caso",
+          "Ingreso Caso",
+          "Fecha Respuesta",
+          "Respuesta Caso",
+          "Casuistica",
+          "Observaciones",
+          "Ultimo Comentario de Seller",
+          "Fecha de Revision"
+        ]
+      }
+    };
+
+    let activeForm = "mktp";
+
+    function limpiarTextoParaExcel(texto) {
+      if (!texto) return "";
+      return texto.replace(/\r?\n|\r/g, " - ").trim();
+    }
+
+    function formatearHora(hora) {
+      if (!hora) return "";
+      return hora.length === 5 ? `${hora}:00` : hora;
+    }
+
+    function formatearFechaLatina(fechaIso) {
+      if (!fechaIso) return "";
+      const partes = fechaIso.split("-");
+      if (partes.length === 3) {
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
+      }
+      return fechaIso;
+    }
+
+    function obtenerSemana(fechaString) {
+      if (!fechaString) return "";
+      const parts = fechaString.split("-");
+      const d = new Date(Date.UTC(parts[0], parts[1] - 1, parts[2]));
+      const dayNum = d.getUTCDay() || 7;
+      d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+      const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+      return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    }
+
+    function setCascadeOptions(prefix) {
+      const tipo = document.getElementById(`${prefix}_tipo_solicitud`);
+      const cas1 = document.getElementById(`${prefix}_casuistica1`);
+      const cas2 = document.getElementById(`${prefix}_casuistica2`);
+
+      tipo.innerHTML = '<option value="">Seleccionar Tipo...</option>';
+      Object.keys(cascadeData).forEach((item) => {
+        const option = document.createElement("option");
+        option.value = item;
+        option.textContent = item;
+        tipo.appendChild(option);
+      });
+
+      cas1.innerHTML = '<option value="">Primero seleccione Tipo de Solicitud...</option>';
+      cas2.innerHTML = '<option value="">Primero seleccione Casuistica 1...</option>';
+      cas1.disabled = true;
+      cas2.disabled = true;
+
+      tipo.addEventListener("change", () => updateCasuistica1(prefix));
+      cas1.addEventListener("change", () => updateCasuistica2(prefix));
+    }
+
+    function updateCasuistica1(prefix) {
+      const tipo = document.getElementById(`${prefix}_tipo_solicitud`).value;
+      const cas1 = document.getElementById(`${prefix}_casuistica1`);
+      const cas2 = document.getElementById(`${prefix}_casuistica2`);
+
+      cas1.innerHTML = '<option value="">Seleccionar Casuistica 1...</option>';
+      cas2.innerHTML = '<option value="">Primero seleccione Casuistica 1...</option>';
+      cas2.disabled = true;
+
+      if (tipo && cascadeData[tipo]) {
+        cas1.disabled = false;
+        Object.keys(cascadeData[tipo]).forEach((cat1) => {
+          const option = document.createElement("option");
+          option.value = cat1;
+          option.textContent = cat1;
+          cas1.appendChild(option);
+        });
+      } else {
+        cas1.disabled = true;
+        cas1.innerHTML = '<option value="">Primero seleccione Tipo de Solicitud...</option>';
+      }
+      actualizarPreview();
+    }
+
+    function updateCasuistica2(prefix) {
+      const tipo = document.getElementById(`${prefix}_tipo_solicitud`).value;
+      const selectedCat1 = document.getElementById(`${prefix}_casuistica1`).value;
+      const cas2 = document.getElementById(`${prefix}_casuistica2`);
+
+      cas2.innerHTML = '<option value="">Seleccionar Casuistica 2...</option>';
+
+      if (tipo && selectedCat1 && cascadeData[tipo] && cascadeData[tipo][selectedCat1]) {
+        cas2.disabled = false;
+        cascadeData[tipo][selectedCat1].forEach((casuistica) => {
+          const option = document.createElement("option");
+          option.value = casuistica;
+          option.textContent = casuistica;
+          cas2.appendChild(option);
+        });
+      } else {
+        cas2.disabled = true;
+      }
+      actualizarPreview();
+    }
+
+    function getCasuistica(prefix) {
+      const tipo = document.getElementById(`${prefix}_tipo_solicitud`).value;
+      const cas1 = document.getElementById(`${prefix}_casuistica1`).value;
+      const cas2 = document.getElementById(`${prefix}_casuistica2`).value;
+
+      let resultado = tipo;
+      if (cas1) resultado += ` > ${cas1}`;
+      if (cas2) resultado += ` > ${cas2}`;
+      return resultado;
+    }
+
+    function getMktpData() {
+      const fechaIngresada = document.getElementById("mktp_fecha").value;
+      return [
+        limpiarTextoParaExcel(document.getElementById("mktp_asunto").value),
+        document.getElementById("mktp_ta").value,
+        obtenerSemana(fechaIngresada),
+        formatearFechaLatina(fechaIngresada),
+        formatearHora(document.getElementById("mktp_hora_cayo").value),
+        formatearHora(document.getElementById("mktp_hora_vi").value),
+        formatearHora(document.getElementById("mktp_hora_respondi").value),
+        document.getElementById("mktp_estado").value,
+        document.getElementById("mktp_agente").value,
+        getCasuistica("mktp"),
+        limpiarTextoParaExcel(document.getElementById("mktp_observacion").value),
+        limpiarTextoParaExcel(document.getElementById("mktp_ultimo_comentario").value),
+        formatearFechaLatina(document.getElementById("mktp_revision").value),
+        document.getElementById("mktp_canal_compra").value,
+        document.getElementById("mktp_seller").value
+      ];
+    }
+
+    function getApisData() {
+      const fechaIngreso = document.getElementById("apis_fecha_ingreso").value;
+      return [
+        limpiarTextoParaExcel(document.getElementById("apis_ref_pedido").value),
+        document.getElementById("apis_n_caso_gcic").value,
+        limpiarTextoParaExcel(document.getElementById("apis_nombre_cliente").value),
+        document.getElementById("apis_estado_reclamo").value,
+        document.getElementById("apis_agente").value,
+        document.getElementById("apis_gcic").value,
+        obtenerSemana(fechaIngreso),
+        formatearFechaLatina(fechaIngreso),
+        formatearHora(document.getElementById("apis_hora_ingreso").value),
+        formatearFechaLatina(document.getElementById("apis_fecha_respuesta").value),
+        formatearHora(document.getElementById("apis_hora_respuesta").value),
+        getCasuistica("apis"),
+        limpiarTextoParaExcel(document.getElementById("apis_observaciones").value),
+        limpiarTextoParaExcel(document.getElementById("apis_ultimo_comentario_seller").value),
+        formatearFechaLatina(document.getElementById("apis_fecha_revision").value)
+      ];
+    }
+
+    function getActiveData() {
+      return activeForm === "mktp" ? getMktpData() : getApisData();
+    }
+
+    function actualizarPreview() {
+      const previewBody = document.getElementById("preview-body");
+      const previewMode = document.getElementById("preview-mode");
+      const previewFilled = document.getElementById("preview-filled");
+      const previewEmpty = document.getElementById("preview-empty");
+      const previewRow = document.getElementById("preview-row");
+      const data = getActiveData();
+      const cols = configs[activeForm].columns;
+
+      previewMode.textContent = configs[activeForm].previewLabel;
+      previewBody.innerHTML = "";
+
+      const filledCount = data.filter((value) => String(value).trim() !== "").length;
+  const pendingCount = cols.length - filledCount;
+      previewFilled.textContent = `Completos: ${filledCount}`;
+  previewEmpty.textContent = `Pendientes: ${pendingCount}`;
+  previewEmpty.classList.toggle("is-warning", pendingCount > 3);
+      previewRow.value = data.map((value) => value || "").join(" \\t ");
+
+      cols.forEach((colName, index) => {
+        const tr = document.createElement("tr");
+        const value = data[index] || "";
+        const isEmpty = String(value).trim() === "";
+        tr.className = isEmpty ? "row-empty" : "";
+        tr.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${colName}</td>
+          <td>${isEmpty ? "Pendiente" : value}</td>
+        `;
+        previewBody.appendChild(tr);
+      });
+    }
+
+    function limpiarFormularioActivo() {
+      const prefix = activeForm;
+      document.querySelectorAll(`#view-${prefix} input, #view-${prefix} select, #view-${prefix} textarea`).forEach((campo) => {
+        if (campo.tagName === "SELECT") {
+          campo.selectedIndex = 0;
+        } else {
+          campo.value = "";
+        }
+      });
+
+      Object.entries(configs[prefix].defaultValues).forEach(([id, valor]) => {
+        document.getElementById(id).value = valor;
+      });
+
+      updateCasuistica1(prefix);
+      const cas1 = document.getElementById(`${prefix}_casuistica1`);
+      const cas2 = document.getElementById(`${prefix}_casuistica2`);
+      cas1.innerHTML = '<option value="">Primero seleccione Tipo de Solicitud...</option>';
+      cas2.innerHTML = '<option value="">Primero seleccione Casuistica 1...</option>';
+      cas1.disabled = true;
+      cas2.disabled = true;
+
+      actualizarPreview();
+    }
+
+    function copiarFila() {
+      const fila = getActiveData().join("\t");
+      const successMessage = document.getElementById("success-message");
+      const btn = document.getElementById("btn-copiar");
+      const previousText = btn.textContent;
+
+      navigator.clipboard.writeText(fila)
+        .then(() => {
+          successMessage.style.display = "block";
+          btn.textContent = "Copiado";
+          limpiarFormularioActivo();
+          setTimeout(() => {
+            successMessage.style.display = "none";
+            btn.textContent = previousText;
+          }, 4500);
+        })
+        .catch((error) => {
+          window.alert(`Hubo un error al copiar los datos: ${error}`);
+        });
+    }
+
+    function switchTab(targetView, targetForm) {
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        const active = btn.dataset.target === targetView;
+        btn.classList.toggle("active", active);
+        btn.setAttribute("aria-selected", active ? "true" : "false");
+      });
+
+      document.querySelectorAll(".form-view").forEach((view) => {
+        view.classList.toggle("active", view.id === targetView);
+      });
+
+      activeForm = targetForm;
+      document.body.classList.toggle("mode-mktp", activeForm === "mktp");
+      document.body.classList.toggle("mode-apis", activeForm === "apis");
+      actualizarPreview();
+    }
+
+    function initTabs() {
+      document.getElementById("tab-mktp").addEventListener("click", () => switchTab("view-mktp", "mktp"));
+      document.getElementById("tab-apis").addEventListener("click", () => switchTab("view-apis", "apis"));
+    }
+
+    function initLivePreview() {
+      document.querySelectorAll("[data-preview='true']").forEach((el) => {
+        el.addEventListener("input", actualizarPreview);
+        el.addEventListener("change", actualizarPreview);
+      });
+    }
+
+    function init() {
+      setCascadeOptions("mktp");
+      setCascadeOptions("apis");
+      initTabs();
+      initLivePreview();
+      document.getElementById("btn-copiar").addEventListener("click", copiarFila);
+      document.getElementById("btn-limpiar").addEventListener("click", limpiarFormularioActivo);
+      actualizarPreview();
+    }
+
+    init();
+  </script>
+</body>
+</html>
