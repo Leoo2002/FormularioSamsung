@@ -945,30 +945,51 @@
 
   <script>
     const cascadeData = {
-      "eStore Preventa": {
-        "Consulta de disponibilidad de producto": ["Solicitud de propuestas/cotizaciones"],
-        "Intercambio (elegibilidad,valor,informacion de cobro,etc)": ["Consulta General Preventa"],
-        "Informacion fiscal (IVA,etc)": ["Consulta Fiscal"]
+      "eStore - Preventa": {
+        "Caracteristica del producto (diseno, especificaciones, etc)": [""],
+        "Consulta de disponibilidad de producto": [""],
+        "Garantia (cobertura, garantia extendida, SC +)": [""],
+        "Informacion de impuestos (IVA, etc)": [""],
+        "Opciones de Entrega/Instalacion": [""],
+        "Precio/Pago (comparacion de precios, opcion de financiacion)": [""],
+        "Promociones (Black Friday, Buen Fin, descuento, etc)": [""],
+        "Trade-In (eligibilidad, valor, informacion de recogida, etc)": [""]
       },
-      "eStore Pedidos": {
-        "Problema de pedido (carrito/pago/promocion)": ["Operacion no ingresada en Vtex/Control 2- Revisar"],
-        "Modificacion de pedido (direccion/metodo)": ["Cambio de domicilio"],
-        "Estado de pedido (informacion de envio, cuando se espera la entrega)": ["Pedido sin tracking"],
-        "Retraso en la entrega, producto no entregado aun": ["Plazo de entrega cumplido/retraso en la entrega/ en Andreani figura entregado/siniestro/entrega fallida"],
-        "Articulo entregado incorrecto (diferente al articulo pedido)": ["Producto erroneo"],
-        "El producto entregado esta danado": ["Cambio por falla", "Cambio por rotura", "Cambio por color"],
-        "Articulos faltantes en la entrega": ["Pedidos con faltantes/incompletos"],
-        "Solicitud de factura (copia de factura, etc)": ["Re facturacion/ Nota de credito - Reenvio de comprobante/ factura A -/ Reenvio de factura"],
-        "Problema de Trade In (cobro, demora en el proceso,etc)": ["Todo TI"]
+      "eStore - Otros": {
+        "Asistencia de inicio de sesion EPP": [""],
+        "Feedback": [""],
+        "Opciones de Samsung Account (como registrarse, info, etc)": [""],
+        "Opciones de voucher (como se usa, etc.)": [""],
+        "Otros": [""],
+        "Problemas con el voucher (no funciona, se vuelve a emitir, etc)": [""],
+        "Programa de Rewards": [""],
+        "Solicitud de recogida de articulos usados": [""]
       },
-      "eStore Canc/Dev": {
-        "Cancelacion de orden": ["Cancelacion de pedido/arrepentimiento"],
-        "Solicitud de devolucion de pedido (reembolso o cambio)": ["Devolucion comercial/falla/rotura"],
-        "Retraso de reembolso (aun no recibido)": ["Nota de credito - devolucion del dinero"],
-        "DESISTE DE LA CANCELACION": ["Solicito la cancelacion pero se arrepiente de la misma"]
+      "eStore - Pedidos": {
+        "Articulo entregado incorrecto (diferente al articulo pedido)": [""],
+        "Articulos faltantes en la entrega": [""],
+        "Click & Collect (recogida en tienda)": [""],
+        "Disputa de devolucion de cargo por Trade In": [""],
+        "El producto entregado esta danado": [""],
+        "Error de pago (pedido cancelado, no se pudo completar)": [""],
+        "Modificacion de pedido (Direccion/Metodo)": [""],
+        "Problema con Trade In (retraso en el proceso, etc)": [""],
+        "Problema de pedido (Carrito/Pago/Promocion)": [""],
+        "Retraso de instalacion (producto aun no instalado)": [""],
+        "Retraso en la entrega (producto aun no entregado)": [""],
+        "Solicitud de estado de instalacion": [""],
+        "Solicitud de factura (copia de factura, etc.)": [""]
       },
-      "eStore Otros": {
-        "Problemas con Voucher (no funciona, se vuelve a emitir, etc)": ["Reclamos PPC"]
+      "eStore - Cancelacion": {
+        "Cambio incorrecto (producto incorrecto recibido)": [""],
+        "Cancelacion de pedido": [""],
+        "Estado de Reembolso/Cambio": [""],
+        "Politica de devolucion (Reembolso o Cambio)": [""],
+        "Reembolso incorrecto (cantidad incorrecta recibida)": [""],
+        "Retraso de cambio (aun no recibido)": [""],
+        "Retraso en el reembolso (aun no recibido)": [""],
+        "Solicitud de devolucion de pedido (Reembolso o Cambio)": [""],
+        "Solicitud de reembolso por entrega express": [""]
       }
     };
 
@@ -1107,8 +1128,16 @@
       cas2.innerHTML = '<option value="">Seleccionar Casuistica 2...</option>';
 
       if (tipo && selectedCat1 && cascadeData[tipo] && cascadeData[tipo][selectedCat1]) {
+        const casuisticasNivel2 = cascadeData[tipo][selectedCat1].filter((casuistica) => String(casuistica).trim() !== "");
+        if (casuisticasNivel2.length === 0) {
+          cas2.disabled = true;
+          cas2.innerHTML = '<option value="">Sin subclasificacion</option>';
+          actualizarPreview();
+          return;
+        }
+
         cas2.disabled = false;
-        cascadeData[tipo][selectedCat1].forEach((casuistica) => {
+        casuisticasNivel2.forEach((casuistica) => {
           const option = document.createElement("option");
           option.value = casuistica;
           option.textContent = casuistica;
