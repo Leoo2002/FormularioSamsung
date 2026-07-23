@@ -423,6 +423,25 @@
       box-shadow: 0 12px 24px rgba(10, 79, 143, 0.28);
       flex: 1;
       min-width: 220px;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .btn-primary::after {
+      content: "";
+      position: absolute;
+      inset: -45% -35%;
+      background: linear-gradient(108deg, transparent 34%, rgba(255, 255, 255, 0.95) 50%, transparent 66%);
+      transform: translateX(-130%) rotate(8deg);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .btn-primary > * {
+      position: relative;
+      z-index: 1;
     }
 
     .btn-secondary {
@@ -442,7 +461,6 @@
     }
 
     .success {
-      display: none;
       margin-top: 10px;
       border-radius: 10px;
       background: #e3f4ec;
@@ -451,7 +469,36 @@
       font-size: 0.88rem;
       padding: 11px;
       font-weight: 700;
-      animation: fadeInUp 280ms ease-out;
+      opacity: 0;
+      transform: translateY(6px);
+      max-height: 0;
+      overflow: hidden;
+      transition: opacity 260ms ease, transform 260ms ease, max-height 260ms ease, margin-top 260ms ease;
+      margin-top: 0;
+      pointer-events: none;
+    }
+
+    .success.show {
+      opacity: 1;
+      transform: translateY(0);
+      max-height: 120px;
+      margin-top: 10px;
+      pointer-events: auto;
+    }
+
+    .btn-primary.is-copied {
+      animation: copyPulse 620ms ease-out, copyNeonBlink 900ms ease-out;
+      background: linear-gradient(130deg, #0f7a5e 0%, #0d614c 100%);
+      box-shadow: 0 0 0 3px rgba(178, 255, 229, 0.5), 0 0 24px rgba(17, 189, 136, 0.38), 0 14px 28px rgba(15, 122, 94, 0.34);
+    }
+
+    .btn-primary.is-copied::after {
+      opacity: 0.95;
+      animation: copyLightSweep 850ms ease-out;
+    }
+
+    .card.copy-flash {
+      animation: cardCopyFlash 860ms ease-out;
     }
 
     .card-head {
@@ -807,6 +854,54 @@
         transform: translateX(130%) rotate(8deg);
       }
     }
+
+    @keyframes copyPulse {
+      0% {
+        transform: scale(1);
+      }
+      35% {
+        transform: scale(1.04);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes copyNeonBlink {
+      0% {
+        filter: saturate(1);
+      }
+      35% {
+        filter: saturate(1.28) brightness(1.08);
+      }
+      100% {
+        filter: saturate(1);
+      }
+    }
+
+    @keyframes copyLightSweep {
+      0% {
+        transform: translateX(-130%) rotate(8deg);
+      }
+      100% {
+        transform: translateX(130%) rotate(8deg);
+      }
+    }
+
+    @keyframes cardCopyFlash {
+      0% {
+        border-color: var(--border);
+        box-shadow: var(--shadow-soft);
+      }
+      30% {
+        border-color: #91c7b7;
+        box-shadow: 0 0 0 4px rgba(15, 122, 94, 0.2), 0 14px 28px rgba(15, 122, 94, 0.18);
+      }
+      100% {
+        border-color: var(--border);
+        box-shadow: var(--shadow-soft);
+      }
+    }
   </style>
 </head>
 <body class="mode-mktp">
@@ -839,8 +934,8 @@
 
       <p class="switch-label">Tipo de carga</p>
       <div class="tabs" role="tablist" aria-label="Tipo de formulario">
-        <button id="tab-mktp" class="tab-btn active" type="button" role="tab" aria-selected="true" data-target="view-mktp"><span class="tab-dot"></span>MKTP</button>
-        <button id="tab-apis" class="tab-btn" type="button" role="tab" aria-selected="false" data-target="view-apis"><span class="tab-dot"></span>APIS / GCIC</button>
+        <button id="tab-mktp" class="tab-btn active" type="button" role="tab" aria-selected="true" data-target="view-mktp"><span class="tab-dot"></span>MKTP/Consultas</button>
+        <button id="tab-apis" class="tab-btn" type="button" role="tab" aria-selected="false" data-target="view-apis"><span class="tab-dot"></span>APIS</button>
       </div>
 
       <div id="view-mktp" class="form-view active" data-form="mktp">
@@ -1132,6 +1227,7 @@
         "Disputa de devolucion de cargo por Trade In": [""],
         "El producto entregado esta danado": [""],
         "Error de pago (pedido cancelado, no se pudo completar)": [""],
+        "Estado de pedido": [""],
         "Modificacion de pedido (Direccion/Metodo)": [""],
         "Problema con Trade In (retraso en el proceso, etc)": [""],
         "Problema de pedido (Carrito/Pago/Promocion)": [""],
@@ -1428,15 +1524,27 @@
       const fila = getActiveData().join("\t");
       const successMessage = document.getElementById("success-message");
       const btn = document.getElementById("btn-copiar");
+      const previewCard = document.querySelector(".side-panel .card");
       const previousText = btn.textContent;
 
       navigator.clipboard.writeText(fila)
         .then(() => {
-          successMessage.style.display = "block";
+          successMessage.classList.add("show");
           btn.textContent = "Copiado";
+          btn.classList.add("is-copied");
+          if (previewCard) {
+            previewCard.classList.remove("copy-flash");
+            void previewCard.offsetWidth;
+            previewCard.classList.add("copy-flash");
+          }
           limpiarFormularioActivo();
+
           setTimeout(() => {
-            successMessage.style.display = "none";
+            btn.classList.remove("is-copied");
+          }, 700);
+
+          setTimeout(() => {
+            successMessage.classList.remove("show");
             btn.textContent = previousText;
           }, 4500);
         })
