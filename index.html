@@ -486,6 +486,86 @@
       pointer-events: auto;
     }
 
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(11, 25, 40, 0.46);
+      backdrop-filter: blur(6px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 220ms ease, visibility 220ms ease;
+      z-index: 100;
+    }
+
+    .modal-backdrop.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      width: min(100%, 520px);
+      background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+      border: 1px solid #c9d8e8;
+      border-radius: 18px;
+      box-shadow: 0 24px 50px rgba(12, 30, 48, 0.24);
+      overflow: hidden;
+      transform: translateY(10px) scale(0.98);
+      transition: transform 220ms ease;
+    }
+
+    .modal-backdrop.show .modal-card {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-head {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid #d8e4ef;
+      background: linear-gradient(180deg, #fafdff 0%, #edf5fc 100%);
+    }
+
+    .modal-head h3 {
+      margin: 0;
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: #173550;
+    }
+
+    .modal-head p {
+      margin: 6px 0 0;
+      font-size: 0.88rem;
+      color: #53708c;
+      line-height: 1.45;
+    }
+
+    .modal-body {
+      padding: 18px 20px;
+    }
+
+    .modal-missing-list {
+      margin: 0;
+      padding-left: 18px;
+      display: grid;
+      gap: 8px;
+      color: #24425f;
+      font-size: 0.88rem;
+    }
+
+    .modal-foot {
+      padding: 16px 20px 20px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+      border-top: 1px solid #d8e4ef;
+      background: #fbfdff;
+    }
+
     .btn-primary.is-copied {
       animation: copyPulse 620ms ease-out, copyNeonBlink 900ms ease-out;
       background: linear-gradient(130deg, #0f7a5e 0%, #0d614c 100%);
@@ -621,6 +701,19 @@
 
     tr.row-empty td:nth-child(3) {
       color: #8a9bae;
+      font-style: italic;
+    }
+
+    tr.row-unused td {
+      background: #f6f9fc;
+    }
+
+    tr.row-unused td:nth-child(2),
+    tr.row-unused td:nth-child(3) {
+      color: #9aabba;
+    }
+
+    tr.row-unused td:nth-child(3) {
       font-style: italic;
     }
 
@@ -947,15 +1040,12 @@
               <option value="">Seleccionar...</option>
               <option value="Sofia Niccolo">Sofia Niccolo</option>
               <option value="Bruno Urdapilleta">Bruno Urdapilleta</option>
+              <option value="Franco Nicolas Arcajo">Franco Nicolas Arcajo</option>
             </select>
           </div>
           <div class="field span-4">
-            <label for="mktp_fecha">Fecha</label>
-            <input id="mktp_fecha" type="date" data-preview="true" />
-          </div>
-          <div class="field span-4">
             <label for="mktp_ta">TA (Ticket)</label>
-            <input id="mktp_ta" type="number" placeholder="Ej: 1253746497" data-preview="true" />
+            <input id="mktp_ta" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Ej: 1253746497" data-preview="true" data-numeric-only="true" />
           </div>
 
           <div class="field span-4">
@@ -981,10 +1071,19 @@
             </select>
           </div>
           <div class="field span-4">
+            <label for="mktp_origen">CASILLAS</label>
+            <select id="mktp_origen" data-preview="true">
+              <option value="">Seleccionar...</option>
+              <option value="MKTP">MKTP</option>
+              <option value="Consultas">Consultas</option>
+            </select>
+          </div>
+          <div class="field span-4">
             <label for="mktp_estado">Estado del Reclamo</label>
             <select id="mktp_estado" data-preview="true">
+              <option value="">Seleccionar...</option>
               <option value="Abierto">Abierto</option>
-              <option value="Resuelto" selected>Resuelto</option>
+              <option value="Resuelto">Resuelto</option>
               <option value="Cerrado">Cerrado</option>
             </select>
           </div>
@@ -1002,29 +1101,37 @@
               <label for="mktp_tipo_solicitud">1. Tipo de Solicitud</label>
               <select id="mktp_tipo_solicitud" data-preview="true"></select>
             </div>
-            <div class="field span-4">
+            <div class="field span-8">
               <label for="mktp_casuistica1">2. Casuistica 1</label>
               <select id="mktp_casuistica1" data-preview="true" disabled></select>
-            </div>
-            <div class="field span-4">
-              <label for="mktp_casuistica2">3. Casuistica 2</label>
-              <select id="mktp_casuistica2" data-preview="true" disabled></select>
             </div>
           </div>
         </div>
 
         <div class="group-title">Tiempos y Seguimiento</div>
         <div class="grid">
-          <div class="field span-4">
-            <label for="mktp_hora_cayo">Cuando cayo</label>
+          <div class="field span-6">
+            <label for="mktp_fecha">Fecha en que lo recibi</label>
+            <input id="mktp_fecha" type="date" data-preview="true" />
+          </div>
+          <div class="field span-6">
+            <label for="mktp_hora_cayo">Hora en que lo recibi</label>
             <input id="mktp_hora_cayo" type="time" data-preview="true" />
           </div>
-          <div class="field span-4">
-            <label for="mktp_hora_vi">Lo vi</label>
+          <div class="field span-6">
+            <label for="mktp_fecha_vi">Fecha en que lo vi</label>
+            <input id="mktp_fecha_vi" type="date" data-preview="true" />
+          </div>
+          <div class="field span-6">
+            <label for="mktp_hora_vi">Hora en que lo vi</label>
             <input id="mktp_hora_vi" type="time" data-preview="true" />
           </div>
-          <div class="field span-4">
-            <label for="mktp_hora_respondi">Lo respondi</label>
+          <div class="field span-6">
+            <label for="mktp_fecha_respondi">Fecha en que lo respondi</label>
+            <input id="mktp_fecha_respondi" type="date" data-preview="true" />
+          </div>
+          <div class="field span-6">
+            <label for="mktp_hora_respondi">Hora en que lo respondi</label>
             <input id="mktp_hora_respondi" type="time" data-preview="true" />
           </div>
 
@@ -1053,7 +1160,7 @@
           </div>
           <div class="field span-4">
             <label for="apis_n_caso_gcic">N de Caso GCIC</label>
-            <input id="apis_n_caso_gcic" type="number" placeholder="Ej: 1259479636" data-preview="true" />
+            <input id="apis_n_caso_gcic" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Ej: 1259479636" data-preview="true" data-numeric-only="true" />
           </div>
           <div class="field span-4">
             <label for="apis_nombre_cliente">Nombre de Cliente</label>
@@ -1063,9 +1170,12 @@
           <div class="field span-4">
             <label for="apis_estado_reclamo">Estado del Reclamo</label>
             <select id="apis_estado_reclamo" data-preview="true">
+              <option value="">Seleccionar...</option>
               <option value="Abierto">Abierto</option>
-              <option value="Cerrado" selected>Cerrado</option>
+              <option value="Cerrado">Cerrado</option>
               <option value="Cerrado Automatico">Cerrado Automatico</option>
+              <option value="Estado 1">Estado 1</option>
+              <option value="Estado 2">Estado 2</option>
             </select>
           </div>
           <div class="field span-4">
@@ -1074,32 +1184,39 @@
               <option value="">Seleccionar...</option>
               <option value="Sofia Niccolo">Sofia Niccolo</option>
               <option value="Bruno Urdapilleta">Bruno Urdapilleta</option>
+              <option value="Franco Nicolas Arcajo">Franco Nicolas Arcajo</option>
             </select>
           </div>
           <div class="field span-4">
             <label for="apis_gcic">GCIC</label>
             <select id="apis_gcic" data-preview="true">
+              <option value="">Seleccionar...</option>
               <option value="ABIERTO">ABIERTO</option>
-              <option value="CERRADO" selected>CERRADO</option>
+              <option value="CERRADO">CERRADO</option>
             </select>
           </div>
 
-          <div class="field span-3">
-            <label for="apis_fecha_ingreso">Fecha Ingreso Caso</label>
-            <input id="apis_fecha_ingreso" type="date" data-preview="true" />
+          <div class="field span-4">
+            <label for="apis_seller">Seller</label>
+            <select id="apis_seller" data-preview="true">
+              <option value="">Seleccionar...</option>
+              <option value="No aplica">No aplica</option>
+              <option value="BGH">BGH</option>
+              <option value="MIRGOR">MIRGOR</option>
+              <option value="MULTIPOINT">MULTIPOINT</option>
+              <option value="VISUAR">VISUAR</option>
+            </select>
           </div>
-          <div class="field span-3">
-            <label for="apis_hora_ingreso">Ingreso Caso (Hora)</label>
-            <input id="apis_hora_ingreso" type="time" data-preview="true" />
+          <div class="field span-4">
+            <label for="apis_origen">API</label>
+            <select id="apis_origen" data-preview="true">
+              <option value="">Seleccionar...</option>
+              <option value="Galicia">Galicia</option>
+              <option value="ICBC">ICBC</option>
+              <option value="Patagonia">Patagonia</option>
+            </select>
           </div>
-          <div class="field span-3">
-            <label for="apis_fecha_respuesta">Fecha Respuesta</label>
-            <input id="apis_fecha_respuesta" type="date" data-preview="true" />
-          </div>
-          <div class="field span-3">
-            <label for="apis_hora_respuesta">Respuesta Caso (Hora)</label>
-            <input id="apis_hora_respuesta" type="time" data-preview="true" />
-          </div>
+
         </div>
 
         <div class="group-title">Casuistica</div>
@@ -1109,19 +1226,31 @@
               <label for="apis_tipo_solicitud">1. Tipo de Solicitud</label>
               <select id="apis_tipo_solicitud" data-preview="true"></select>
             </div>
-            <div class="field span-4">
+            <div class="field span-8">
               <label for="apis_casuistica1">2. Casuistica 1</label>
               <select id="apis_casuistica1" data-preview="true" disabled></select>
-            </div>
-            <div class="field span-4">
-              <label for="apis_casuistica2">3. Casuistica 2</label>
-              <select id="apis_casuistica2" data-preview="true" disabled></select>
             </div>
           </div>
         </div>
 
         <div class="group-title">Seguimiento</div>
         <div class="grid">
+          <div class="field span-6">
+            <label for="apis_fecha_ingreso">Fecha en que lo recibi</label>
+            <input id="apis_fecha_ingreso" type="date" data-preview="true" />
+          </div>
+          <div class="field span-6">
+            <label for="apis_hora_ingreso">Hora en que lo recibi</label>
+            <input id="apis_hora_ingreso" type="time" data-preview="true" />
+          </div>
+          <div class="field span-6">
+            <label for="apis_fecha_respuesta">Fecha en que lo respondi</label>
+            <input id="apis_fecha_respuesta" type="date" data-preview="true" />
+          </div>
+          <div class="field span-6">
+            <label for="apis_hora_respuesta">Hora en que lo respondi</label>
+            <input id="apis_hora_respuesta" type="time" data-preview="true" />
+          </div>
           <div class="field span-6">
             <label for="apis_observaciones">Observaciones</label>
             <textarea id="apis_observaciones" rows="3" placeholder="Detalles del caso..." data-preview="true"></textarea>
@@ -1152,10 +1281,10 @@
         </div>
         <div class="card-body">
           <div class="preview-meta">
-            <span id="preview-mode" class="preview-tag">MKTP | 15 columnas</span>
+            <span id="preview-mode" class="preview-tag">UNIFICADO | 22 columnas</span>
             <div class="preview-stats">
               <span id="preview-filled" class="preview-stat">Completos: 0</span>
-              <span id="preview-empty" class="preview-stat">Pendientes: 15</span>
+              <span id="preview-empty" class="preview-stat">Pendientes: 22</span>
             </div>
           </div>
           <div class="preview-table-wrap">
@@ -1185,7 +1314,7 @@
         <div class="card-body">
           <ol class="helper-list">
             <li><strong>Abrí el Excel</strong></li>
-            <li><strong>Elige la pestana correcta</strong></li>
+            <li><strong>Elige la pestana <b>"UNIFICADO"</b></strong></li>
             <li><strong>Ubicate en la primera celda vacia de la nueva fila</strong></li>
             <li><strong>Pega con Ctrl + V una sola vez</strong></li>
             <li><strong>Confirma visualmente</strong></li>
@@ -1198,6 +1327,22 @@
       </section>
     </aside>
   </main>
+
+  <div id="validation-modal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="validation-modal-title">
+      <div class="modal-head">
+        <h3 id="validation-modal-title">Hay datos para revisar</h3>
+        <p>Se detectaron campos faltantes o inconsistencias en el formulario activo. Puedes volver para corregirlos o copiar de igual manera.</p>
+      </div>
+      <div class="modal-body">
+        <ol id="validation-modal-list" class="modal-missing-list"></ol>
+      </div>
+      <div class="modal-foot">
+        <button id="validation-cancel" class="btn btn-secondary" type="button">Cancelar</button>
+        <button id="validation-confirm" class="btn btn-primary" type="button">Copiar de igual manera</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     const cascadeData = {
@@ -1252,59 +1397,244 @@
 
     const configs = {
       mktp: {
-        previewLabel: "MKTP | 15 columnas",
-        defaultValues: {
-          mktp_estado: "Resuelto"
-        },
+        previewLabel: "UNIFICADO | 22 columnas",
+        defaultValues: {},
+        unusedColumns: [0, 1, 2],
         columns: [
-          "Asunto",
+          "REF. PEDIDO.",
+          "NOMBRE DE CLIENTE",
+          "GCIC",
+          "ASUNTO",
           "TA",
           "Week",
-          "Fecha",
-          "Cuando cayo",
-          "Lo vi",
-          "Lo respondi",
-          "Estado del Reclamo",
+          "Fecha / Fecha de ingreso de caso",
+          "Hora de ingreso de caso",
+          "Fecha en que lo vi",
+          "Hora en que lo vi",
+          "Fecha en que lo respondi",
+          "Hora en que lo respondi",
+          "ESTADO DEL RECLAMO",
           "Agente",
+          "Tipo de Solicitud",
           "Casuistica",
-          "Observaciones",
-          "Ultimo Comentario + Fecha",
-          "Revision",
-          "Canal de compra",
-          "Seller"
+          "OBSERVACIONES",
+          "ULTIMO COMENTARIO DEL SELLER",
+          "FECHA DE REVISION",
+          "SELLER",
+          "CANAL DE COMPRA",
+          "API / CASILLA"
         ]
       },
       apis: {
-        previewLabel: "APIS / GCIC | 15 columnas",
-        defaultValues: {
-          apis_estado_reclamo: "Cerrado",
-          apis_gcic: "CERRADO"
-        },
+        previewLabel: "UNIFICADO | 22 columnas",
+        defaultValues: {},
+        unusedColumns: [3, 8, 9, 20],
         columns: [
-          "Referencia/Numero del pedido",
-          "N de Caso GCIC",
-          "Nombre de Cliente",
-          "Estado del Reclamo",
-          "Agente",
+          "REF. PEDIDO.",
+          "NOMBRE DE CLIENTE",
           "GCIC",
+          "ASUNTO",
+          "TA",
           "Week",
-          "Fecha Ingreso Caso",
-          "Ingreso Caso",
-          "Fecha Respuesta",
-          "Respuesta Caso",
+          "Fecha / Fecha de ingreso de caso",
+          "Hora de ingreso de caso",
+          "Fecha en que lo vi",
+          "Hora en que lo vi",
+          "Fecha en que lo respondi",
+          "Hora en que lo respondi",
+          "ESTADO DEL RECLAMO",
+          "Agente",
+          "Tipo de Solicitud",
           "Casuistica",
-          "Observaciones",
-          "Ultimo Comentario de Seller",
-          "Fecha de Revision"
+          "OBSERVACIONES",
+          "ULTIMO COMENTARIO DEL SELLER",
+          "FECHA DE REVISION",
+          "SELLER",
+          "CANAL DE COMPRA",
+          "API / CASILLA"
         ]
       }
     };
 
     let activeForm = "mktp";
+    let validationModalResolver = null;
+
+    function setSelectDefaultState(select, disableDefaultOption) {
+      const initialValue = select.dataset.initialValue ?? "";
+      const defaultOption = Array.from(select.options).find((opt) => opt.value === initialValue);
+      if (defaultOption) {
+        defaultOption.disabled = disableDefaultOption;
+      }
+    }
+
+    function lockSelectDefaultAfterChange(event) {
+      const select = event.target;
+      if (!select || select.tagName !== "SELECT") return;
+      const initialValue = select.dataset.initialValue ?? "";
+      const alreadyLocked = select.dataset.defaultLocked === "true";
+
+      if (!alreadyLocked && select.value !== initialValue) {
+        select.dataset.defaultLocked = "true";
+        setSelectDefaultState(select, true);
+      }
+    }
+
+    function initSelectDefaultLocks() {
+      document.querySelectorAll("select").forEach((select) => {
+        if (select.dataset.initializedDefaultLock === "true") return;
+        select.dataset.initializedDefaultLock = "true";
+        select.dataset.initialValue = select.value;
+        select.dataset.defaultLocked = "false";
+        select.addEventListener("change", lockSelectDefaultAfterChange);
+      });
+    }
+
+    function resetSelectDefaultLocks(prefix) {
+      document.querySelectorAll(`#view-${prefix} select`).forEach((select) => {
+        select.dataset.defaultLocked = "false";
+        setSelectDefaultState(select, false);
+      });
+    }
 
     function limpiarTextoParaExcel(texto) {
       if (!texto) return "";
       return texto.replace(/\r?\n|\r/g, " - ").trim();
+    }
+
+    function sanitizeNumericInput(event) {
+      const input = event.target;
+      input.value = input.value.replace(/\D/g, "");
+    }
+
+    function getFieldLabel(field) {
+      const label = document.querySelector(`label[for='${field.id}']`);
+      return label ? label.textContent.trim() : field.id;
+    }
+
+    function getMissingActiveFormFields() {
+      const activeView = document.getElementById(`view-${activeForm}`);
+      const missingFields = [];
+
+      activeView.querySelectorAll("input, select, textarea").forEach((field) => {
+        if (field.disabled || field.type === "button" || field.type === "submit") {
+          return;
+        }
+
+        const value = String(field.value || "").trim();
+        if (value === "") {
+          missingFields.push(getFieldLabel(field));
+        }
+      });
+
+      return missingFields;
+    }
+
+    function getDateTimeValue(dateId, timeId) {
+      const dateValue = document.getElementById(dateId).value;
+      const timeValue = document.getElementById(timeId).value;
+
+      if (!dateValue || !timeValue) {
+        return null;
+      }
+
+      return new Date(`${dateValue}T${timeValue}`);
+    }
+
+    function getChronologyValidationIssues() {
+      const issues = [];
+
+      if (activeForm === "mktp") {
+        const recibido = getDateTimeValue("mktp_fecha", "mktp_hora_cayo");
+        const visto = getDateTimeValue("mktp_fecha_vi", "mktp_hora_vi");
+        const respondido = getDateTimeValue("mktp_fecha_respondi", "mktp_hora_respondi");
+
+        if (recibido && visto && recibido >= visto) {
+          issues.push("La fecha y hora de recibido debe ser anterior a la fecha y hora en que lo vi.");
+        }
+
+        if (visto && respondido && visto >= respondido) {
+          issues.push("La fecha y hora en que lo vi debe ser anterior a la fecha y hora en que lo respondi.");
+        }
+      }
+
+      if (activeForm === "apis") {
+        const recibido = getDateTimeValue("apis_fecha_ingreso", "apis_hora_ingreso");
+        const respondido = getDateTimeValue("apis_fecha_respuesta", "apis_hora_respuesta");
+
+        if (recibido && respondido && recibido >= respondido) {
+          issues.push("La fecha y hora de recibido debe ser anterior a la fecha y hora en que lo respondi.");
+        }
+      }
+
+      return issues;
+    }
+
+    function getActiveFormValidationIssues() {
+      const missingFields = getMissingActiveFormFields().map((field) => `Falta completar: ${field}`);
+      return [...missingFields, ...getChronologyValidationIssues()];
+    }
+
+    function closeValidationModal(shouldContinue) {
+      const modal = document.getElementById("validation-modal");
+      modal.classList.remove("show");
+      modal.setAttribute("aria-hidden", "true");
+
+      if (validationModalResolver) {
+        validationModalResolver(shouldContinue);
+        validationModalResolver = null;
+      }
+    }
+
+    function showValidationModal(validationIssues) {
+      const modal = document.getElementById("validation-modal");
+      const list = document.getElementById("validation-modal-list");
+      const confirmButton = document.getElementById("validation-confirm");
+
+      list.innerHTML = "";
+      validationIssues.forEach((issue) => {
+        const item = document.createElement("li");
+        item.textContent = issue;
+        list.appendChild(item);
+      });
+
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden", "false");
+      confirmButton.focus();
+
+      return new Promise((resolve) => {
+        validationModalResolver = resolve;
+      });
+    }
+
+    function copyTextToClipboard(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text);
+      }
+
+      return new Promise((resolve, reject) => {
+        const helperTextArea = document.createElement("textarea");
+        helperTextArea.value = text;
+        helperTextArea.setAttribute("readonly", "true");
+        helperTextArea.style.position = "fixed";
+        helperTextArea.style.top = "-9999px";
+        helperTextArea.style.left = "-9999px";
+        document.body.appendChild(helperTextArea);
+        helperTextArea.focus();
+        helperTextArea.select();
+
+        try {
+          const copied = document.execCommand("copy");
+          document.body.removeChild(helperTextArea);
+          if (!copied) {
+            reject(new Error("No se pudo copiar al portapapeles."));
+            return;
+          }
+          resolve();
+        } catch (error) {
+          document.body.removeChild(helperTextArea);
+          reject(error);
+        }
+      });
     }
 
     function formatearHora(hora) {
@@ -1334,7 +1664,6 @@
     function setCascadeOptions(prefix) {
       const tipo = document.getElementById(`${prefix}_tipo_solicitud`);
       const cas1 = document.getElementById(`${prefix}_casuistica1`);
-      const cas2 = document.getElementById(`${prefix}_casuistica2`);
 
       tipo.innerHTML = '<option value="">Seleccionar Tipo...</option>';
       Object.keys(cascadeData).forEach((item) => {
@@ -1345,22 +1674,16 @@
       });
 
       cas1.innerHTML = '<option value="">Primero seleccione Tipo de Solicitud...</option>';
-      cas2.innerHTML = '<option value="">Primero seleccione Casuistica 1...</option>';
       cas1.disabled = true;
-      cas2.disabled = true;
 
       tipo.addEventListener("change", () => updateCasuistica1(prefix));
-      cas1.addEventListener("change", () => updateCasuistica2(prefix));
     }
 
     function updateCasuistica1(prefix) {
       const tipo = document.getElementById(`${prefix}_tipo_solicitud`).value;
       const cas1 = document.getElementById(`${prefix}_casuistica1`);
-      const cas2 = document.getElementById(`${prefix}_casuistica2`);
 
       cas1.innerHTML = '<option value="">Seleccionar Casuistica 1...</option>';
-      cas2.innerHTML = '<option value="">Primero seleccione Casuistica 1...</option>';
-      cas2.disabled = true;
 
       if (tipo && cascadeData[tipo]) {
         cas1.disabled = false;
@@ -1377,64 +1700,36 @@
       actualizarPreview();
     }
 
-    function updateCasuistica2(prefix) {
-      const tipo = document.getElementById(`${prefix}_tipo_solicitud`).value;
-      const selectedCat1 = document.getElementById(`${prefix}_casuistica1`).value;
-      const cas2 = document.getElementById(`${prefix}_casuistica2`);
-
-      cas2.innerHTML = '<option value="">Seleccionar Casuistica 2...</option>';
-
-      if (tipo && selectedCat1 && cascadeData[tipo] && cascadeData[tipo][selectedCat1]) {
-        const casuisticasNivel2 = cascadeData[tipo][selectedCat1].filter((casuistica) => String(casuistica).trim() !== "");
-        if (casuisticasNivel2.length === 0) {
-          cas2.disabled = true;
-          cas2.innerHTML = '<option value="">Sin subclasificacion</option>';
-          actualizarPreview();
-          return;
-        }
-
-        cas2.disabled = false;
-        casuisticasNivel2.forEach((casuistica) => {
-          const option = document.createElement("option");
-          option.value = casuistica;
-          option.textContent = casuistica;
-          cas2.appendChild(option);
-        });
-      } else {
-        cas2.disabled = true;
-      }
-      actualizarPreview();
-    }
-
     function getCasuistica(prefix) {
-      const tipo = document.getElementById(`${prefix}_tipo_solicitud`).value;
       const cas1 = document.getElementById(`${prefix}_casuistica1`).value;
-      const cas2 = document.getElementById(`${prefix}_casuistica2`).value;
-
-      let resultado = tipo;
-      if (cas1) resultado += ` > ${cas1}`;
-      if (cas2) resultado += ` > ${cas2}`;
-      return resultado;
+      return cas1 || "";
     }
 
     function getMktpData() {
       const fechaIngresada = document.getElementById("mktp_fecha").value;
       return [
+        "",
+        "",
+        "",
         limpiarTextoParaExcel(document.getElementById("mktp_asunto").value),
         document.getElementById("mktp_ta").value,
         obtenerSemana(fechaIngresada),
         formatearFechaLatina(fechaIngresada),
         formatearHora(document.getElementById("mktp_hora_cayo").value),
+        formatearFechaLatina(document.getElementById("mktp_fecha_vi").value),
         formatearHora(document.getElementById("mktp_hora_vi").value),
+        formatearFechaLatina(document.getElementById("mktp_fecha_respondi").value),
         formatearHora(document.getElementById("mktp_hora_respondi").value),
         document.getElementById("mktp_estado").value,
         document.getElementById("mktp_agente").value,
+        document.getElementById("mktp_tipo_solicitud").value,
         getCasuistica("mktp"),
         limpiarTextoParaExcel(document.getElementById("mktp_observacion").value),
         limpiarTextoParaExcel(document.getElementById("mktp_ultimo_comentario").value),
         formatearFechaLatina(document.getElementById("mktp_revision").value),
+        document.getElementById("mktp_seller").value,
         document.getElementById("mktp_canal_compra").value,
-        document.getElementById("mktp_seller").value
+        document.getElementById("mktp_origen").value
       ];
     }
 
@@ -1442,20 +1737,27 @@
       const fechaIngreso = document.getElementById("apis_fecha_ingreso").value;
       return [
         limpiarTextoParaExcel(document.getElementById("apis_ref_pedido").value),
-        document.getElementById("apis_n_caso_gcic").value,
         limpiarTextoParaExcel(document.getElementById("apis_nombre_cliente").value),
-        document.getElementById("apis_estado_reclamo").value,
-        document.getElementById("apis_agente").value,
         document.getElementById("apis_gcic").value,
+        "",
+        document.getElementById("apis_n_caso_gcic").value,
         obtenerSemana(fechaIngreso),
         formatearFechaLatina(fechaIngreso),
         formatearHora(document.getElementById("apis_hora_ingreso").value),
+        "",
+        "",
         formatearFechaLatina(document.getElementById("apis_fecha_respuesta").value),
         formatearHora(document.getElementById("apis_hora_respuesta").value),
+        document.getElementById("apis_estado_reclamo").value,
+        document.getElementById("apis_agente").value,
+        document.getElementById("apis_tipo_solicitud").value,
         getCasuistica("apis"),
         limpiarTextoParaExcel(document.getElementById("apis_observaciones").value),
         limpiarTextoParaExcel(document.getElementById("apis_ultimo_comentario_seller").value),
-        formatearFechaLatina(document.getElementById("apis_fecha_revision").value)
+        formatearFechaLatina(document.getElementById("apis_fecha_revision").value),
+        document.getElementById("apis_seller").value,
+        "",
+        document.getElementById("apis_origen").value
       ];
     }
 
@@ -1471,26 +1773,28 @@
       const previewRow = document.getElementById("preview-row");
       const data = getActiveData();
       const cols = configs[activeForm].columns;
+      const unusedColumns = configs[activeForm].unusedColumns || [];
 
       previewMode.textContent = configs[activeForm].previewLabel;
       previewBody.innerHTML = "";
 
-      const filledCount = data.filter((value) => String(value).trim() !== "").length;
-  const pendingCount = cols.length - filledCount;
+      const filledCount = data.filter((value, index) => !unusedColumns.includes(index) && String(value).trim() !== "").length;
+      const pendingCount = cols.filter((_, index) => !unusedColumns.includes(index) && String(data[index] || "").trim() === "").length;
       previewFilled.textContent = `Completos: ${filledCount}`;
-  previewEmpty.textContent = `Pendientes: ${pendingCount}`;
-  previewEmpty.classList.toggle("is-warning", pendingCount > 3);
+      previewEmpty.textContent = `Pendientes: ${pendingCount}`;
+      previewEmpty.classList.toggle("is-warning", pendingCount > 3);
       previewRow.value = data.map((value) => value || "").join(" \\t ");
 
       cols.forEach((colName, index) => {
         const tr = document.createElement("tr");
         const value = data[index] || "";
+        const isUnused = unusedColumns.includes(index);
         const isEmpty = String(value).trim() === "";
-        tr.className = isEmpty ? "row-empty" : "";
+        tr.className = isUnused ? "row-unused" : (isEmpty ? "row-empty" : "");
         tr.innerHTML = `
           <td>${index + 1}</td>
           <td>${colName}</td>
-          <td>${isEmpty ? "Pendiente" : value}</td>
+          <td>${isUnused ? "No aplica" : (isEmpty ? "Pendiente" : value)}</td>
         `;
         previewBody.appendChild(tr);
       });
@@ -1512,46 +1816,51 @@
 
       updateCasuistica1(prefix);
       const cas1 = document.getElementById(`${prefix}_casuistica1`);
-      const cas2 = document.getElementById(`${prefix}_casuistica2`);
       cas1.innerHTML = '<option value="">Primero seleccione Tipo de Solicitud...</option>';
-      cas2.innerHTML = '<option value="">Primero seleccione Casuistica 1...</option>';
       cas1.disabled = true;
-      cas2.disabled = true;
+      resetSelectDefaultLocks(prefix);
 
       actualizarPreview();
     }
 
-    function copiarFila() {
+    async function copiarFila() {
       const fila = getActiveData().join("\t");
       const successMessage = document.getElementById("success-message");
       const btn = document.getElementById("btn-copiar");
       const previewCard = document.querySelector(".side-panel .card");
       const previousText = btn.textContent;
+      const validationIssues = getActiveFormValidationIssues();
 
-      navigator.clipboard.writeText(fila)
-        .then(() => {
-          successMessage.classList.add("show");
-          btn.textContent = "Copiado";
-          btn.classList.add("is-copied");
-          if (previewCard) {
-            previewCard.classList.remove("copy-flash");
-            void previewCard.offsetWidth;
-            previewCard.classList.add("copy-flash");
-          }
-          limpiarFormularioActivo();
+      if (validationIssues.length > 0) {
+        const shouldContinue = await showValidationModal(validationIssues);
+        if (!shouldContinue) {
+          return;
+        }
+      }
 
-          setTimeout(() => {
-            btn.classList.remove("is-copied");
-          }, 700);
+      try {
+        await copyTextToClipboard(fila);
+        successMessage.classList.add("show");
+        btn.textContent = "Copiado";
+        btn.classList.add("is-copied");
+        if (previewCard) {
+          previewCard.classList.remove("copy-flash");
+          void previewCard.offsetWidth;
+          previewCard.classList.add("copy-flash");
+        }
+        limpiarFormularioActivo();
 
-          setTimeout(() => {
-            successMessage.classList.remove("show");
-            btn.textContent = previousText;
-          }, 4500);
-        })
-        .catch((error) => {
-          window.alert(`Hubo un error al copiar los datos: ${error}`);
-        });
+        setTimeout(() => {
+          btn.classList.remove("is-copied");
+        }, 700);
+
+        setTimeout(() => {
+          successMessage.classList.remove("show");
+          btn.textContent = previousText;
+        }, 4500);
+      } catch (error) {
+        window.alert(`Hubo un error al copiar los datos: ${error}`);
+      }
     }
 
     function switchTab(targetView, targetForm) {
@@ -1583,9 +1892,37 @@
       });
     }
 
+    function initNumericOnlyInputs() {
+      document.querySelectorAll("[data-numeric-only='true']").forEach((input) => {
+        input.addEventListener("input", sanitizeNumericInput);
+      });
+    }
+
+    function initValidationModal() {
+      const modal = document.getElementById("validation-modal");
+      const cancelButton = document.getElementById("validation-cancel");
+      const confirmButton = document.getElementById("validation-confirm");
+
+      cancelButton.addEventListener("click", () => closeValidationModal(false));
+      confirmButton.addEventListener("click", () => closeValidationModal(true));
+      modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          closeValidationModal(false);
+        }
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && modal.classList.contains("show")) {
+          closeValidationModal(false);
+        }
+      });
+    }
+
     function init() {
       setCascadeOptions("mktp");
       setCascadeOptions("apis");
+      initSelectDefaultLocks();
+      initNumericOnlyInputs();
+      initValidationModal();
       initTabs();
       initLivePreview();
       document.getElementById("btn-copiar").addEventListener("click", copiarFila);
