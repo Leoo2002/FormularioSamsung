@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Central de Casos · Selector de versión</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="VAM_icono%20para%20pesta%C3%B1a.png" />
+  <link rel="shortcut icon" type="image/png" href="VAM_icono%20para%20pesta%C3%B1a.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #edf2f7;
+      --surface: #ffffff;
+      --ink: #152433;
+      --muted: #536a80;
+      --primary: #0a4f8f;
+      --primary-strong: #083f73;
+      --primary-soft: #dbe9f7;
+      --accent: #8a5a2f;
+      --accent-soft: #f3e8dc;
+      --border: #d2dce7;
+      --shadow: 0 16px 36px rgba(14, 34, 55, 0.12);
+      --shadow-soft: 0 8px 20px rgba(14, 34, 55, 0.08);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --transition: 220ms cubic-bezier(0.2, 0.6, 0.2, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 6%, rgba(10, 79, 143, 0.14), transparent 34%),
+        radial-gradient(circle at 88% 100%, rgba(138, 90, 47, 0.10), transparent 38%),
+        linear-gradient(168deg, #f4f7fb 0%, #eef3f8 50%, #e9eff6 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 960px;
+      display: grid;
+      gap: 28px;
+      animation: fadeInUp 540ms ease-out;
+    }
+
+    .head {
+      text-align: center;
+      display: grid;
+      gap: 10px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+
+    .subtitle {
+      margin: 0 auto;
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .card {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 26px 24px 22px;
+      display: grid;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+      opacity: 0.85;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+      border-color: var(--primary-soft);
+    }
+
+    .card:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(10, 79, 143, 0.25), var(--shadow);
+    }
+
+    .card__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      align-self: start;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .card__title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.005em;
+    }
+
+    .card__desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .card__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .card__cta svg {
+      transition: transform var(--transition);
+    }
+
+    .card:hover .card__cta svg {
+      transform: translateX(4px);
+    }
+
+    /* Ocultar opciones que no queremos mostrar por ahora */
+    .hidden { display: none !important; }
+
+    .foot {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .foot a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .foot a:hover { text-decoration: underline; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 520px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="head">
+      <span class="eyebrow">Samsung eStore · VAM</span>
+      <h1 class="title">Central de Casos</h1>
+      <p class="subtitle">Elegí la versión del formulario que querés abrir.</p>
+    </header>
+
+    <section class="grid" aria-label="Versiones disponibles">
+      <!-- Única opción visible: Versión Profesional -->
+      <a class="card" href="version-profesional/index.html">
+        <span class="card__badge">Recomendada</span>
+        <h2 class="card__title">Versión Profesional</h2>
+        <p class="card__desc">Interfaz completa para la carga y copia de casos MKTP/Consultas y APIS al Excel unificado.</p>
+        <span class="card__cta">
+          Abrir formulario
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+
+      <!--
+        Opciones ocultas. Para volver a mostrarlas, borrá la clase "hidden"
+        del enlace correspondiente (o quitá los comentarios).
+      -->
+      <a class="card hidden" href="version-minima/index.html">
+        <span class="card__badge">Simple</span>
+        <h2 class="card__title">Versión Mínima</h2>
+        <p class="card__desc">Interfaz reducida y liviana, enfocada en el flujo esencial de copia y pegado.</p>
+        <span class="card__cta">
+          Abrir formulario
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+
+      <a class="card hidden" href="version-editorial/index.html">
+        <span class="card__badge">Editorial</span>
+        <h2 class="card__title">Versión Editorial</h2>
+        <p class="card__desc">Presentación tipográfica con estética editorial para lecturas prolongadas.</p>
+        <span class="card__cta">
+          Abrir formulario
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+    </section>
+
+    <footer class="foot">
+      ¿Necesitás la versión original? <a href="index-original.html">Abrir index original</a>
+    </footer>
+  </main>
+</body>
+</html>

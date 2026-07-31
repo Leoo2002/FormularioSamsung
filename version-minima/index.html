@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Central de Casos</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../VAM_icono%20para%20pesta%C3%B1a.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;550;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+
+  <header class="head">
+    <div class="head__brand">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="head__title">Central de Casos</span>
+      <span class="head__sub">Samsung eStore · VAM</span>
+    </div>
+    <div class="head__logos" aria-hidden="true">
+      <img src="../Konecta_Logo_RGB_Blue.png" alt="" />
+      <span class="head__vam">VAM</span>
+      <svg viewBox="0 0 130 29" height="12" aria-label="Samsung">
+        <g transform="translate(-250 -7)">
+          <path d="M0,13.835V12.482H4.609V14.2a1.558,1.558,0,0,0,1.724,1.6A1.509,1.509,0,0,0,8,14.6a2.237,2.237,0,0,0-.03-1.322C7.076,10.976.981,9.931.208,6.333a6.531,6.531,0,0,1-.029-2.4C.654,1.045,3.122,0,6.184,0c2.438,0,5.8.585,5.8,4.458V5.719H7.7V4.612a1.492,1.492,0,0,0-1.605-1.6,1.452,1.452,0,0,0-1.575,1.2,2.468,2.468,0,0,0,.03.922c.5,2.059,7.017,3.167,7.73,6.887a8.481,8.481,0,0,1,.029,2.921C11.892,17.893,9.336,19,6.244,19,3,19,0,17.8,0,13.835Zm55.837-.062V12.421h4.549v1.691a1.533,1.533,0,0,0,1.695,1.6,1.49,1.49,0,0,0,1.665-1.168,2.147,2.147,0,0,0-.029-1.292c-.863-2.274-6.9-3.319-7.671-6.917a6.37,6.37,0,0,1-.03-2.367c.476-2.859,2.944-3.9,5.946-3.9,2.409,0,5.739.615,5.739,4.427v1.23H63.449V4.643a1.485,1.485,0,0,0-1.575-1.6,1.4,1.4,0,0,0-1.546,1.168,2.463,2.463,0,0,0,.029.922C60.832,7.194,67.284,8.27,68,11.959a8.314,8.314,0,0,1,.029,2.89c-.416,2.952-2.943,4.028-6.005,4.028C58.811,18.877,55.837,17.678,55.837,13.773Zm16.293.647A7.18,7.18,0,0,1,72.1,13.25V.523h4.341V13.65a5.023,5.023,0,0,0,.029.677,1.682,1.682,0,0,0,3.271,0,4.852,4.852,0,0,0,.03-.677V.523h4.341V13.25c0,.339-.03.984-.03,1.169-.3,3.319-2.825,4.4-5.976,4.4S72.428,17.739,72.13,14.419Zm35.739-.185a9.539,9.539,0,0,1-.059-1.168V5.6c0-.308.029-.861.059-1.169.386-3.319,2.973-4.365,6.036-4.365,3.033,0,5.708,1.045,6.006,4.365A8.781,8.781,0,0,1,119.94,5.6v.584H115.6V5.2a3.791,3.791,0,0,0-.059-.677,1.777,1.777,0,0,0-3.42,0,3.772,3.772,0,0,0-.059.829v8.117a5.1,5.1,0,0,0,.03.677,1.707,1.707,0,0,0,1.813,1.291,1.633,1.633,0,0,0,1.754-1.291,2.554,2.554,0,0,0,.03-.677V10.883h-1.754V8.3H120v4.765a9.377,9.377,0,0,1-.06,1.168c-.3,3.228-3,4.366-6.036,4.366S108.166,17.462,107.869,14.235Zm-60.5,4.027L47.245,1.845,44.272,18.262H39.931L36.987,1.845l-.118,16.417H32.587L32.943.554h6.988L42.1,14.388,44.272.554h6.987l.386,17.708Zm-22.835,0L22.211,1.845,19.831,18.262H15.194L18.344.554h7.642l3.152,17.708Zm72.665-.184L92.884,3.352l.238,14.726H88.9V.554h6.363l4.044,14.265L99.068.554h4.251V18.078Z" transform="translate(255 12)"/>
+        </g>
+      </svg>
+    </div>
+    <button id="theme-toggle" class="head__theme" type="button" aria-label="Cambiar tema">
+      <svg class="i-sun" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+      </svg>
+      <svg class="i-moon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </header>
+
+  <main class="app">
+    <section class="col col--form">
+      <!-- Segmented -->
+      <div class="segmented" role="tablist" aria-label="Tipo de carga">
+        <span class="segmented__pill" aria-hidden="true"></span>
+        <button id="tab-mktp" class="segmented__btn is-active" type="button" role="tab" aria-selected="true" data-target="view-mktp" data-form="mktp">MKTP · Consultas</button>
+        <button id="tab-apis" class="segmented__btn" type="button" role="tab" aria-selected="false" data-target="view-apis" data-form="apis">APIS</button>
+      </div>
+
+      <!-- MKTP -->
+      <div id="view-mktp" class="view is-active" data-form="mktp">
+        <section class="block">
+          <h2>Generales</h2>
+          <div class="grid">
+            <div class="f s4"><label for="mktp_agente">Agente</label>
+              <select id="mktp_agente" data-preview="true">
+                <option value="">—</option>
+                <option>Sofia Niccolo</option>
+                <option>Bruno Urdapilleta</option>
+                <option>Franco Nicolas Arcajo</option>
+              </select></div>
+            <div class="f s4"><label for="mktp_ta">TA</label>
+              <input id="mktp_ta" type="text" inputmode="numeric" placeholder="1253746497" data-preview="true" data-numeric-only="true" /></div>
+            <div class="f s4"><label for="mktp_seller">Seller</label>
+              <select id="mktp_seller" data-preview="true">
+                <option value="">—</option>
+                <option>No aplica</option><option>BGH</option><option>MIRGOR</option><option>MULTIPOINT</option><option>VISUAR</option>
+              </select></div>
+            <div class="f s4"><label for="mktp_canal_compra">Canal</label>
+              <select id="mktp_canal_compra" data-preview="true">
+                <option value="">—</option>
+                <option>AMEX</option><option>BAPRO</option><option>GALICIA</option><option>ICBC</option><option>Sin informar</option>
+              </select></div>
+            <div class="f s4"><label for="mktp_origen">Casilla</label>
+              <select id="mktp_origen" data-preview="true">
+                <option value="">—</option><option>MKTP</option><option>Consultas</option>
+              </select></div>
+            <div class="f s4"><label for="mktp_estado">Estado</label>
+              <select id="mktp_estado" data-preview="true">
+                <option value="">—</option><option>Abierto</option><option>Resuelto</option><option>Cerrado</option>
+              </select></div>
+            <div class="f s12"><label for="mktp_asunto">Asunto</label>
+              <input id="mktp_asunto" type="text" placeholder="Asunto del mail" data-preview="true" /></div>
+          </div>
+        </section>
+
+        <section class="block">
+          <h2>Clasificación</h2>
+          <div class="grid">
+            <div class="f s4"><label for="mktp_tipo_solicitud">Tipo</label>
+              <select id="mktp_tipo_solicitud" data-preview="true"></select></div>
+            <div class="f s8"><label for="mktp_casuistica1">Casuística</label>
+              <select id="mktp_casuistica1" data-preview="true" disabled></select></div>
+          </div>
+        </section>
+
+        <section class="block">
+          <h2>Tiempos</h2>
+          <div class="grid">
+            <div class="f s6"><label for="mktp_fecha">Recibido</label>
+              <input id="mktp_fecha" type="date" data-preview="true" /></div>
+            <div class="f s6"><label for="mktp_hora_cayo">Hora</label>
+              <input id="mktp_hora_cayo" type="time" data-preview="true" /></div>
+            <div class="f s6"><label for="mktp_fecha_vi">Visto</label>
+              <input id="mktp_fecha_vi" type="date" data-preview="true" /></div>
+            <div class="f s6"><label for="mktp_hora_vi">Hora</label>
+              <input id="mktp_hora_vi" type="time" data-preview="true" /></div>
+            <div class="f s6"><label for="mktp_fecha_respondi">Respondido</label>
+              <input id="mktp_fecha_respondi" type="date" data-preview="true" /></div>
+            <div class="f s6"><label for="mktp_hora_respondi">Hora</label>
+              <input id="mktp_hora_respondi" type="time" data-preview="true" /></div>
+            <div class="f s6"><label for="mktp_observacion">Observaciones</label>
+              <textarea id="mktp_observacion" rows="3" data-preview="true"></textarea></div>
+            <div class="f s6"><label for="mktp_ultimo_comentario">Último comentario</label>
+              <textarea id="mktp_ultimo_comentario" rows="3" data-preview="true"></textarea></div>
+            <div class="f s4"><label for="mktp_revision">Revisión</label>
+              <input id="mktp_revision" type="date" data-preview="true" /></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- APIS -->
+      <div id="view-apis" class="view" data-form="apis">
+        <section class="block">
+          <h2>Generales</h2>
+          <div class="grid">
+            <div class="f s4"><label for="apis_ref_pedido">Referencia</label>
+              <input id="apis_ref_pedido" type="text" placeholder="JODVPBDAY / 12345678" data-preview="true" /></div>
+            <div class="f s4"><label for="apis_n_caso_gcic">Caso GCIC</label>
+              <input id="apis_n_caso_gcic" type="text" inputmode="numeric" placeholder="1259479636" data-preview="true" data-numeric-only="true" /></div>
+            <div class="f s4"><label for="apis_nombre_cliente">Cliente</label>
+              <input id="apis_nombre_cliente" type="text" placeholder="JUAN PEREZ" data-preview="true" /></div>
+            <div class="f s4"><label for="apis_estado_reclamo">Estado</label>
+              <select id="apis_estado_reclamo" data-preview="true">
+                <option value="">—</option><option>Abierto</option><option>Cerrado</option><option>Cerrado Automatico</option><option>Estado 1</option><option>Estado 2</option>
+              </select></div>
+            <div class="f s4"><label for="apis_agente">Agente</label>
+              <select id="apis_agente" data-preview="true">
+                <option value="">—</option>
+                <option>Sofia Niccolo</option><option>Bruno Urdapilleta</option><option>Franco Nicolas Arcajo</option>
+              </select></div>
+            <div class="f s4"><label for="apis_gcic">GCIC</label>
+              <select id="apis_gcic" data-preview="true">
+                <option value="">—</option><option>ABIERTO</option><option>CERRADO</option>
+              </select></div>
+            <div class="f s6"><label for="apis_seller">Seller</label>
+              <select id="apis_seller" data-preview="true">
+                <option value="">—</option>
+                <option>No aplica</option><option>BGH</option><option>MIRGOR</option><option>MULTIPOINT</option><option>VISUAR</option>
+              </select></div>
+            <div class="f s6"><label for="apis_origen">API</label>
+              <select id="apis_origen" data-preview="true">
+                <option value="">—</option><option>Galicia</option><option>ICBC</option><option>Patagonia</option>
+              </select></div>
+          </div>
+        </section>
+
+        <section class="block">
+          <h2>Casuística</h2>
+          <div class="grid">
+            <div class="f s4"><label for="apis_tipo_solicitud">Tipo</label>
+              <select id="apis_tipo_solicitud" data-preview="true"></select></div>
+            <div class="f s8"><label for="apis_casuistica1">Casuística</label>
+              <select id="apis_casuistica1" data-preview="true" disabled></select></div>
+          </div>
+        </section>
+
+        <section class="block">
+          <h2>Seguimiento</h2>
+          <div class="grid">
+            <div class="f s6"><label for="apis_fecha_ingreso">Recibido</label>
+              <input id="apis_fecha_ingreso" type="date" data-preview="true" /></div>
+            <div class="f s6"><label for="apis_hora_ingreso">Hora</label>
+              <input id="apis_hora_ingreso" type="time" data-preview="true" /></div>
+            <div class="f s6"><label for="apis_fecha_respuesta">Respondido</label>
+              <input id="apis_fecha_respuesta" type="date" data-preview="true" /></div>
+            <div class="f s6"><label for="apis_hora_respuesta">Hora</label>
+              <input id="apis_hora_respuesta" type="time" data-preview="true" /></div>
+            <div class="f s6"><label for="apis_observaciones">Observaciones</label>
+              <textarea id="apis_observaciones" rows="3" data-preview="true"></textarea></div>
+            <div class="f s6"><label for="apis_ultimo_comentario_seller">Último comentario</label>
+              <textarea id="apis_ultimo_comentario_seller" rows="3" data-preview="true"></textarea></div>
+            <div class="f s4"><label for="apis_fecha_revision">Revisión</label>
+              <input id="apis_fecha_revision" type="date" data-preview="true" /></div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- SIDE -->
+    <aside class="col col--side">
+      <div class="side-sticky">
+        <!-- Progress card -->
+        <section class="card card--stat">
+          <div class="stat">
+            <div class="stat__percent"><span id="progress-percent">0</span><em>%</em></div>
+            <div class="stat__bar"><span id="progress-fill"></span></div>
+            <div class="stat__legend">
+              <span><i class="chip chip--ok"></i>Completos <b id="preview-filled">0</b></span>
+              <span><i class="chip chip--wait"></i>Pendientes <b id="preview-empty">0</b></span>
+              <span><i class="chip chip--na"></i>No aplican <b id="preview-unused">0</b></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Preview -->
+        <section class="card" id="preview-card">
+          <header class="card__head">
+            <h3>Preview</h3>
+            <span id="preview-mode" class="tag">22 columnas</span>
+          </header>
+          <div class="card__body">
+            <div class="tbl-wrap">
+              <table class="tbl">
+                <thead><tr><th>#</th><th>Columna</th><th>Valor</th></tr></thead>
+                <tbody id="preview-body"></tbody>
+              </table>
+            </div>
+            <textarea id="preview-row" class="raw" readonly spellcheck="false" aria-label="Línea lista para pegar"></textarea>
+          </div>
+        </section>
+
+        <!-- Action bar -->
+        <div class="actions">
+          <button id="btn-limpiar" class="btn btn--ghost" type="button">Limpiar</button>
+          <button id="btn-copiar" class="btn btn--primary" type="button">
+            <svg class="i-copy" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+            <svg class="i-check" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+            <span class="btn__label">Copiar fila</span>
+            <span class="kbd-hint"><kbd>⌘</kbd><kbd>C</kbd></span>
+          </button>
+        </div>
+
+        <!-- Help -->
+        <details class="help">
+          <summary>
+            <span>Cómo pegar en Excel</span>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <ol>
+            <li>Abrí el Excel de Seguimiento de Casos.</li>
+            <li>Elegí la pestaña <b>UNIFICADO</b>.</li>
+            <li>Ubicate en la primera celda vacía.</li>
+            <li>Pegá con <kbd>Ctrl</kbd>+<kbd>V</kbd>.</li>
+            <li>Si algo no coincide: <kbd>Ctrl</kbd>+<kbd>Z</kbd>.</li>
+          </ol>
+          <a class="ext-link" href="https://allusargentina-my.sharepoint.com/:x:/r/personal/camila_balbastro_grupokonecta_com_ar/Documents/Mail/Seguimiento%20de%20Casos%20MAILS.xlsx?d=w2dc8ccf330154ceebe7b42ee4bdeddcc&csf=1&web=1&e=X7FeeP" target="_blank" rel="noopener noreferrer">
+            Abrir Excel
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"/><path d="M10 14L21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>
+          </a>
+        </details>
+      </div>
+    </aside>
+  </main>
+
+  <div id="validation-modal" class="modal" aria-hidden="true">
+    <div class="modal__scrim" data-close></div>
+    <div class="modal__card" role="dialog" aria-modal="true" aria-labelledby="validation-modal-title">
+      <h3 id="validation-modal-title">Datos para revisar</h3>
+      <p>Detectamos campos incompletos o inconsistencias.</p>
+      <ol id="validation-modal-list"></ol>
+      <div class="modal__foot">
+        <button id="validation-cancel" class="btn btn--ghost" type="button" data-close>Volver</button>
+        <button id="validation-confirm" class="btn btn--primary" type="button">Copiar igual</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+    <span>Copiado al portapapeles</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Central de Casos — Samsung eStore</title>
+  <meta name="description" content="Central editorial de carga y copia de casos MKTP/Consultas y APIS para el Excel unificado." />
+  <link rel="icon" type="image/png" sizes="32x32" href="../VAM_icono%20para%20pesta%C3%B1a.png" />
+  <link rel="shortcut icon" type="image/png" href="../VAM_icono%20para%20pesta%C3%B1a.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Paper texture layer -->
+  <div class="paper" aria-hidden="true"></div>
+
+  <!-- Masthead -->
+  <header class="masthead" role="banner">
+    <div class="masthead__row">
+      <div class="masthead__meta">
+        <span class="masthead__date" id="masthead-date"></span>
+        <span class="masthead__sep">·</span>
+        <span class="masthead__section">SAMSUNG · VAM · EDICIÓN INTERNA</span>
+      </div>
+      <div class="masthead__brands">
+        <div class="mast-brand" title="Konecta">
+          <img src="../Konecta_Logo_RGB_Blue.png" alt="Konecta" />
+        </div>
+        <div class="mast-brand mast-brand--text">VAM</div>
+        <div class="mast-brand" title="Samsung">
+          <svg focusable="false" aria-hidden="true" viewBox="0 0 130 29">
+            <g transform="translate(-250 -7)">
+              <path d="M0,13.835V12.482H4.609V14.2a1.558,1.558,0,0,0,1.724,1.6A1.509,1.509,0,0,0,8,14.6a2.237,2.237,0,0,0-.03-1.322C7.076,10.976.981,9.931.208,6.333a6.531,6.531,0,0,1-.029-2.4C.654,1.045,3.122,0,6.184,0c2.438,0,5.8.585,5.8,4.458V5.719H7.7V4.612a1.492,1.492,0,0,0-1.605-1.6,1.452,1.452,0,0,0-1.575,1.2,2.468,2.468,0,0,0,.03.922c.5,2.059,7.017,3.167,7.73,6.887a8.481,8.481,0,0,1,.029,2.921C11.892,17.893,9.336,19,6.244,19,3,19,0,17.8,0,13.835Zm55.837-.062V12.421h4.549v1.691a1.533,1.533,0,0,0,1.695,1.6,1.49,1.49,0,0,0,1.665-1.168,2.147,2.147,0,0,0-.029-1.292c-.863-2.274-6.9-3.319-7.671-6.917a6.37,6.37,0,0,1-.03-2.367c.476-2.859,2.944-3.9,5.946-3.9,2.409,0,5.739.615,5.739,4.427v1.23H63.449V4.643a1.485,1.485,0,0,0-1.575-1.6,1.4,1.4,0,0,0-1.546,1.168,2.463,2.463,0,0,0,.029.922C60.832,7.194,67.284,8.27,68,11.959a8.314,8.314,0,0,1,.029,2.89c-.416,2.952-2.943,4.028-6.005,4.028C58.811,18.877,55.837,17.678,55.837,13.773Zm16.293.647A7.18,7.18,0,0,1,72.1,13.25V.523h4.341V13.65a5.023,5.023,0,0,0,.029.677,1.682,1.682,0,0,0,3.271,0,4.852,4.852,0,0,0,.03-.677V.523h4.341V13.25c0,.339-.03.984-.03,1.169-.3,3.319-2.825,4.4-5.976,4.4S72.428,17.739,72.13,14.419Zm35.739-.185a9.539,9.539,0,0,1-.059-1.168V5.6c0-.308.029-.861.059-1.169.386-3.319,2.973-4.365,6.036-4.365,3.033,0,5.708,1.045,6.006,4.365A8.781,8.781,0,0,1,119.94,5.6v.584H115.6V5.2a3.791,3.791,0,0,0-.059-.677,1.777,1.777,0,0,0-3.42,0,3.772,3.772,0,0,0-.059.829v8.117a5.1,5.1,0,0,0,.03.677,1.707,1.707,0,0,0,1.813,1.291,1.633,1.633,0,0,0,1.754-1.291,2.554,2.554,0,0,0,.03-.677V10.883h-1.754V8.3H120v4.765a9.377,9.377,0,0,1-.06,1.168c-.3,3.228-3,4.366-6.036,4.366S108.166,17.462,107.869,14.235Zm-60.5,4.027L47.245,1.845,44.272,18.262H39.931L36.987,1.845l-.118,16.417H32.587L32.943.554h6.988L42.1,14.388,44.272.554h6.987l.386,17.708Zm-22.835,0L22.211,1.845,19.831,18.262H15.194L18.344.554h7.642l3.152,17.708Zm72.665-.184L92.884,3.352l.238,14.726H88.9V.554h6.363l4.044,14.265L99.068.554h4.251V18.078Z" transform="translate(255 12)"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <button id="theme-toggle" class="ghost-btn" type="button" aria-label="Cambiar tema">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <span>Tema</span>
+      </button>
+    </div>
+
+    <div class="masthead__title">
+      <div class="masthead__label">Vol. II · N° 22</div>
+      <h1><em>Central</em> de Casos</h1>
+      <p>Carga editorial, revisión de columnas y copia lista para pegar en <span>Seguimiento&nbsp;de&nbsp;Casos&nbsp;MAILS</span>.</p>
+    </div>
+
+    <!-- Progress bar (full width, editorial) -->
+    <div class="progress-strip" aria-hidden="false">
+      <div class="progress-strip__track">
+        <div id="progress-fill" class="progress-strip__fill"></div>
+      </div>
+      <div class="progress-strip__meta">
+        <span><b id="progress-percent">0%</b> completado</span>
+        <span class="tally"><i class="mark mark--filled"></i>Completos <b id="preview-filled">0</b></span>
+        <span class="tally"><i class="mark mark--pending"></i>Pendientes <b id="preview-empty">0</b></span>
+        <span class="tally"><i class="mark mark--unused"></i>No aplican <b id="preview-unused">0</b></span>
+        <span id="preview-mode" class="tally tally--tag">UNIFICADO · 22 COL.</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- LEFT: FORM -->
+    <section class="composition">
+      <!-- Tabs as editorial section nav -->
+      <nav class="section-nav" role="tablist" aria-label="Tipo de carga">
+        <button id="tab-mktp" class="section-nav__btn is-active" type="button" role="tab" aria-selected="true" data-target="view-mktp" data-form="mktp">
+          <span class="section-nav__num">§ 01</span>
+          <span class="section-nav__label">MKTP · Consultas</span>
+        </button>
+        <button id="tab-apis" class="section-nav__btn" type="button" role="tab" aria-selected="false" data-target="view-apis" data-form="apis">
+          <span class="section-nav__num">§ 02</span>
+          <span class="section-nav__label">APIS</span>
+        </button>
+        <span class="section-nav__underline" aria-hidden="true"></span>
+      </nav>
+
+      <!-- MKTP VIEW -->
+      <article id="view-mktp" class="form-view is-active" data-form="mktp">
+        <section class="chapter">
+          <header class="chapter__head">
+            <span class="chapter__num">I.</span>
+            <div>
+              <h2>Datos generales</h2>
+              <p>Identificación del caso y contexto principal.</p>
+            </div>
+            <span class="chapter__rule" aria-hidden="true"></span>
+          </header>
+          <div class="grid">
+            <div class="field span-4">
+              <label for="mktp_agente"><span class="tag">a</span>Agente</label>
+              <select id="mktp_agente" data-preview="true">
+                <option value="">Seleccionar…</option>
+                <option value="Sofia Niccolo">Sofia Niccolo</option>
+                <option value="Bruno Urdapilleta">Bruno Urdapilleta</option>
+                <option value="Franco Nicolas Arcajo">Franco Nicolas Arcajo</option>
+              </select>
+            </div>
+            <div class="field span-4">
+              <label for="mktp_ta"><span class="tag">b</span>TA (Ticket)</label>
+              <input id="mktp_ta" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Ej: 1253746497" data-preview="true" data-numeric-only="true" />
+            </div>
+            <div class="field span-4">
+              <label for="mktp_seller"><span class="tag">c</span>Seller</label>
+              <select id="mktp_seller" data-preview="true">
+                <option value="">Seleccionar…</option>
+                <option value="No aplica">No aplica</option>
+                <option value="BGH">BGH</option>
+                <option value="MIRGOR">MIRGOR</option>
+                <option value="MULTIPOINT">MULTIPOINT</option>
+                <option value="VISUAR">VISUAR</option>
+              </select>
+            </div>
+            <div class="field span-4">
+              <label for="mktp_canal_compra"><span class="tag">d</span>Canal de compra</label>
+              <select id="mktp_canal_compra" data-preview="true">
+                <option value="">Seleccionar…</option>
+                <option value="AMEX">AMEX</option>
+                <option value="BAPRO">BAPRO</option>
+                <option value="GALICIA">GALICIA</option>
+                <option value="ICBC">ICBC</option>
+                <option value="Sin informar">Sin informar</option>
+              </select>
+            </div>
+            <div class="field span-4">
+              <label for="mktp_origen"><span class="tag">e</span>Casilla</label>
+              <select id="mktp_origen" data-preview="true">
+                <option value="">Seleccionar…</option>
+                <option value="MKTP">MKTP</option>
+                <option value="Consultas">Consultas</option>
+              </select>
+            </div>
+            <div class="field span-4">
+              <label for="mktp_estado"><span class="tag">f</span>Estado del reclamo</label>
+              <select id="mktp_estado" data-preview="true">
+                <option value="">Seleccionar…</option>
+                <option value="Abierto">Abierto</option>
+                <option value="Resuelto">Resuelto</option>
+                <option value="Cerrado">Cerrado</option>
+              </select>
+            </div>
+            <div class="field span-12">
+              <label for="mktp_asunto"><span class="tag">g</span>Asunto del mail</label>
+              <input id="mktp_asunto" type="text" placeholder="Ej: Reclamo por pedido demorado…" data-preview="true" />
+            </div>
+          </div>
+        </section>
+
+        <section class="chapter">
+          <header class="chapter__head">
+            <span class="chapter__num">II.</span>
+            <div>
+              <h2>Clasificación</h2>
+              <p>Categorización en cascada del tipo de consulta.</p>
+            </div>
+            <span class="chapter__rule" aria-hidden="true"></span>
+          </header>
+          <div class="pull-quote">
+            <div class="grid">
+              <div class="field span-4">
+                <label for="mktp_tipo_solicitud"><span class="tag">h</span>Tipo de solicitud</label>
+                <select id="mktp_tipo_solicitud" data-preview="true"></select>
+              </div>
+              <div class="field span-8">
+                <label for="mktp_casuistica1"><span class="tag">i</span>Casuística</label>
+                <select id="mktp_casuistica1" data-preview="true" disabled></select>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="chapter">
+          <header class="chapter__head">
+            <span class="chapter__num">III.</span>
+            <div>
+              <h2>Tiempos y seguimiento</h2>
+              <p>Cronología del caso desde ingreso hasta respuesta.</p>
+            </div>
+            <span class="chapter__rule" aria-hidden="true"></span>
+          </header>
+          <div class="grid">
+            <div class="field span-6">
+              <label for="mktp_fecha"><span class="tag">j</span>Fecha en que lo recibí</label>
+              <input id="mktp_fecha" type="date" data-preview="true" />
+            </div>
+            <div class="field span-6">
+              <label for="mktp_hora_cayo"><span class="tag">k</span>Hora en que lo recibí</label>
+              <input id="mktp_hora_cayo" type="time" data-preview="true" />
+            </div>
+            <div class="field span-6">
+              <label for="mktp_fecha_vi"><span class="tag">l</span>Fecha en que lo vi</label>
+              <input id="mktp_fecha_vi" type="date" data-preview="true" />
+            </div>
+            <div class="field span-6">
+              <label for="mktp_hora_vi"><span class="tag">m</span>Hora en que lo vi</label>
+              <input id="mktp_hora_vi" type="time" data-preview="true" />
+            </div>
+            <div class="field span-6">
+              <label for="mktp_fecha_respondi"><span class="tag">n</span>Fecha en que lo respondí</label>
+              <input id="mktp_fecha_respondi" type="date" data-preview="true" />
+            </div>
+            <div class="field span-6">
+              <label for="mktp_hora_respondi"><span class="tag">o</span>Hora en que lo respondí</label>
+              <input id="mktp_hora_respondi" type="time" data-preview="true" />
+            </div>
+            <div class="field span-6">
+              <label for="mktp_observacion"><span class="tag">p</span>Observaciones</label>
+              <textarea id="mktp_observacion" rows="3" placeholder="Detalles de la consulta…" data-preview="true"></textarea>
+            </div>
+            <div class="field span-6">
+              <label for="mktp_ultimo_comentario"><span class="tag">q</span>Último comentario + fecha</label>
+              <textarea id="mktp_ultimo_comentario" rows="3" placeholder="Comentarios del seller y fecha…" data-preview="true"></textarea>
+            </div>
+            <div class="field span-4">
+              <label for="mktp_revision"><span class="tag">r</span>Revisión (fecha)</label>
+              <input id="mktp_revision" type="date" data-preview="true" />
+            </div>
+          </div>
+        </section>
+      </article>
+
+      <!-- APIS VIEW -->
+      <article id="view-apis" class="form-view" data-form="apis">
+        <section class="chapter">
+          <header class="chapter__head">
+            <span class="chapter__num">I.</span>
+            <div>
+              <h2>Datos generales</h2>
+              <p>Identificación del caso y contexto principal.</p>
+            </div>
+            <span class="chapter__rule" aria-hidden="true"></span>
+          </header>
+          <div class="grid">
+            <div class="field span-4">
+              <label for="apis_ref_pedido"><span class="tag">a</span>Referencia / N° de pedido</label>
+              <input id="apis_ref_pedido" type="text" placeholder="Ej: JODVPBDAY / 12345678" data-preview="true" />
+            </div>
+            <div class="field span-4">
+              <label for="apis_n_caso_gcic"><span class="tag">b</span>N° de caso GCIC</label>
+              <input id="apis_n_caso_gcic" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Ej: 1259479636" data-preview="true" data-numeric-only="true" />
+            </div>
+            <div class="field span-4">
+              <label for="apis_nombre_cliente"><span class="tag">c</span>Nombre del cliente</label>
+              <input id="apis_nombre_cliente" type="text" placeholder="Ej: JUAN PEREZ" data-preview="true" />
+            </div>
+            <div class="field span-4">
+              <label for="apis_estado_reclamo"><span class="tag">d</span>Estado del reclamo</label>
+              <select id="apis_estado_reclamo" data-preview="true">
+                <option value="">Seleccionar…</option>
+                <option value="Abierto">Abierto</option>
+                <option value="Cerrado">Cerrado</option>
+                <option value="Cerrado Automatico">Cerrado Automático</option>
+                <option value="Estado 1">Estado 1</option>
+                <option value="Estado 2">Estado 2</option>
+              </select>
+            </div>
+            <div class="field span-4">
+              <label for="apis_agente"><span class="tag">e</span>Agente</label>
+              <select id="apis_agente" data-preview="true">
+                <option value="">Seleccionar…</option>
+                <option value="Sofia Niccolo">Sofia Niccolo</option>
+                <option value="Bruno Urdapilleta">Bruno Urdapilleta</option>
+                <option value="Franco Nicolas Arcajo">Franco Nicolas Arcajo</option>
+              </select>
+            </div>
+            <div class="field span-4">
+              <label for="apis_gcic"><span class="tag">f</span>GCIC</label>
+              <select id="apis_gcic" data-preview="true">
+                <option value="">Seleccionar…</option>
+                <option value="ABIERTO">ABIERTO</option>
+                <option value="CERRADO">CERRADO</option>
+              </select>
+            </div>
+            <div class="field span-6">
+              <label for="apis_seller"><span class="tag">g</span>Seller</label>
+              <select id="apis_seller" data-preview="true">
+                <option value="">Seleccionar…</option>
+                <option value="No aplica">No aplica</option>
+                <option value="BGH">BGH</option>
+                <option value="MIRGOR">MIRGOR</option>
+                <option value="MULTIPOINT">MULTIPOINT</option>
+                <option value="VISUAR">VISUAR</option>
+              </select>
+            </div>
+            <div class="field span-6">
+              <label for="apis_origen"><span class="tag">h</span>API</label>
+              <select id="apis_origen" data-preview="true">
+                <option value="">Seleccionar…</option>
+                <option value="Galicia">Galicia</option>
+                <option value="ICBC">ICBC</option>
+                <option value="Patagonia">Patagonia</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section class="chapter">
+          <header class="chapter__head">
+            <span class="chapter__num">II.</span>
+            <div>
+              <h2>Casuística</h2>
+              <p>Categorización en cascada del caso.</p>
+            </div>
+            <span class="chapter__rule" aria-hidden="true"></span>
+          </header>
+          <div class="pull-quote">
+            <div class="grid">
+              <div class="field span-4">
+                <label for="apis_tipo_solicitud"><span class="tag">i</span>Tipo de solicitud</label>
+                <select id="apis_tipo_solicitud" data-preview="true"></select>
+              </div>
+              <div class="field span-8">
+                <label for="apis_casuistica1"><span class="tag">j</span>Casuística</label>
+                <select id="apis_casuistica1" data-preview="true" disabled></select>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="chapter">
+          <header class="chapter__head">
+            <span class="chapter__num">III.</span>
+            <div>
+              <h2>Seguimiento</h2>
+              <p>Cronología del caso desde ingreso hasta respuesta.</p>
+            </div>
+            <span class="chapter__rule" aria-hidden="true"></span>
+          </header>
+          <div class="grid">
+            <div class="field span-6">
+              <label for="apis_fecha_ingreso"><span class="tag">k</span>Fecha en que lo recibí</label>
+              <input id="apis_fecha_ingreso" type="date" data-preview="true" />
+            </div>
+            <div class="field span-6">
+              <label for="apis_hora_ingreso"><span class="tag">l</span>Hora en que lo recibí</label>
+              <input id="apis_hora_ingreso" type="time" data-preview="true" />
+            </div>
+            <div class="field span-6">
+              <label for="apis_fecha_respuesta"><span class="tag">m</span>Fecha en que lo respondí</label>
+              <input id="apis_fecha_respuesta" type="date" data-preview="true" />
+            </div>
+            <div class="field span-6">
+              <label for="apis_hora_respuesta"><span class="tag">n</span>Hora en que lo respondí</label>
+              <input id="apis_hora_respuesta" type="time" data-preview="true" />
+            </div>
+            <div class="field span-6">
+              <label for="apis_observaciones"><span class="tag">o</span>Observaciones</label>
+              <textarea id="apis_observaciones" rows="3" placeholder="Detalles del caso…" data-preview="true"></textarea>
+            </div>
+            <div class="field span-6">
+              <label for="apis_ultimo_comentario_seller"><span class="tag">p</span>Último comentario del seller</label>
+              <textarea id="apis_ultimo_comentario_seller" rows="3" placeholder="Comentarios…" data-preview="true"></textarea>
+            </div>
+            <div class="field span-4">
+              <label for="apis_fecha_revision"><span class="tag">q</span>Fecha de revisión</label>
+              <input id="apis_fecha_revision" type="date" data-preview="true" />
+            </div>
+          </div>
+        </section>
+      </article>
+
+      <footer class="composition__foot">
+        <button id="btn-limpiar" class="btn btn--outline" type="button">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+          <span>Limpiar formulario</span>
+        </button>
+        <button id="btn-copiar" class="btn btn--solid" type="button">
+          <span class="btn__inner">
+            <svg class="btn__icon-copy" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="1"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+            <svg class="btn__icon-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+            <span class="btn__label">Copiar fila para Excel</span>
+            <span class="btn__kbd"><kbd>C</kbd></span>
+          </span>
+        </button>
+      </footer>
+    </section>
+
+    <!-- RIGHT: MARGIN -->
+    <aside class="margin-col">
+      <!-- Preview console -->
+      <section class="console" id="preview-card">
+        <header class="console__head">
+          <div class="console__title">
+            <span class="console__dot"></span>
+            <span>preview.tsv</span>
+          </div>
+          <span class="console__meta">columnas × 22</span>
+        </header>
+        <div class="console__body">
+          <table class="ledger">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Columna</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody id="preview-body"></tbody>
+          </table>
+        </div>
+        <footer class="console__foot">
+          <div class="console__row-label">
+            <span>Línea lista</span>
+            <span class="hint">↵ se transforma en “ - ”</span>
+          </div>
+          <textarea id="preview-row" readonly spellcheck="false"></textarea>
+        </footer>
+      </section>
+
+      <!-- Guide -->
+      <section class="note">
+        <header class="note__head">
+          <span class="note__marker">§</span>
+          <h3>Guía de pegado</h3>
+        </header>
+        <ol class="note__steps">
+          <li><b>01.</b> Abrí el Excel de Seguimiento de Casos.</li>
+          <li><b>02.</b> Elegí la pestaña <strong>UNIFICADO</strong>.</li>
+          <li><b>03.</b> Ubicate en la <strong>primera celda vacía</strong>.</li>
+          <li><b>04.</b> Pegá con <kbd>Ctrl</kbd>+<kbd>V</kbd> una sola vez.</li>
+          <li><b>05.</b> Confirmá el orden visualmente.</li>
+          <li><b>06.</b> Si algo no coincide: <kbd>Ctrl</kbd>+<kbd>Z</kbd>.</li>
+        </ol>
+        <a class="note__link" href="https://allusargentina-my.sharepoint.com/:x:/r/personal/camila_balbastro_grupokonecta_com_ar/Documents/Mail/Seguimiento%20de%20Casos%20MAILS.xlsx?d=w2dc8ccf330154ceebe7b42ee4bdeddcc&csf=1&web=1&e=X7FeeP" target="_blank" rel="noopener noreferrer">
+          <span>Abrir Seguimiento de Casos MAILS</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"/><path d="M10 14L21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>
+        </a>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="colophon">
+    <span>Colofón — Central de Casos · Samsung eStore · VAM.</span>
+    <span>Impreso en pantalla, cada carga.</span>
+  </footer>
+
+  <!-- Validation modal -->
+  <div id="validation-modal" class="modal" aria-hidden="true">
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__card" role="dialog" aria-modal="true" aria-labelledby="validation-modal-title">
+      <header class="modal__head">
+        <span class="modal__eyebrow">Aviso · Revisión</span>
+        <h3 id="validation-modal-title">Datos para revisar</h3>
+        <p>Detectamos campos incompletos o inconsistencias. Volvé a corregir o copiá de igual manera.</p>
+      </header>
+      <div class="modal__body">
+        <ol id="validation-modal-list" class="modal__list"></ol>
+      </div>
+      <footer class="modal__foot">
+        <button id="validation-cancel" class="btn btn--outline" type="button" data-close>Volver a corregir</button>
+        <button id="validation-confirm" class="btn btn--solid" type="button">Copiar de igual manera</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite">
+    <span class="toast__mark">✓</span>
+    <div>
+      <strong>Copiado al portapapeles</strong>
+      <span>Pegá en el Excel con <kbd>Ctrl</kbd>+<kbd>V</kbd>.</span>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
