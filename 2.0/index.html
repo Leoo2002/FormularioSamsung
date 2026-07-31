@@ -18,6 +18,7 @@
     <div class="ambient__grid"></div>
     <div class="ambient__glow ambient__glow--a"></div>
     <div class="ambient__glow ambient__glow--b"></div>
+    <canvas id="web-canvas" class="ambient__web"></canvas>
   </div>
 
   <!-- Top navigation -->
@@ -38,8 +39,8 @@
       </div>
 
       <nav class="topbar__logos" aria-label="Marcas">
-        <div class="logo-chip" title="Konecta">
-          <img src="../Konecta_Logo_RGB_Blue.png" alt="Konecta" />
+        <div class="logo-chip logo-chip--text" title="Konecta">
+          <span>Konecta</span>
         </div>
         <div class="logo-chip logo-chip--text" title="VAM">
           <span>VAM</span>
@@ -542,5 +543,139 @@
   </div>
 
   <script src="app.js"></script>
+  <script>
+    /* Interactive particle web background (self-contained) */
+    (function () {
+      var canvas = document.getElementById('web-canvas');
+      if (!canvas || !canvas.getContext) return;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var ctx = canvas.getContext('2d');
+      var dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
+      var particles = [];
+      var mouse = { x: -9999, y: -9999, active: false };
+      var w = 0, h = 0;
+      var rafId = null;
+      var visible = true;
+
+      function getBrandRGB() {
+        try {
+          var css = getComputedStyle(document.documentElement).getPropertyValue('--brand-500').trim();
+          if (!css) return [90, 168, 242];
+          if (css[0] === '#') {
+            var hex = css.slice(1);
+            if (hex.length === 3) hex = hex.split('').map(function (c) { return c + c; }).join('');
+            var n = parseInt(hex, 16);
+            return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+          }
+          var m = css.match(/\d+/g);
+          if (m && m.length >= 3) return [parseInt(m[0], 10), parseInt(m[1], 10), parseInt(m[2], 10)];
+        } catch (e) {}
+        return [90, 168, 242];
+      }
+      var brand = getBrandRGB();
+
+      function resize() {
+        w = canvas.clientWidth = window.innerWidth;
+        h = canvas.clientHeight = window.innerHeight;
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        var target = Math.round((w * h) / 8235);
+        var count = Math.max(102, Math.min(272, target));
+        particles.length = 0;
+        for (var i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            r: 1.2 + Math.random() * 1.4
+          });
+        }
+      }
+
+      function step() {
+        rafId = null;
+        if (!visible) return;
+        ctx.clearRect(0, 0, w, h);
+        var linkDist = Math.min(140, Math.max(90, Math.sqrt(w * h) / 10));
+        var linkDist2 = linkDist * linkDist;
+        var mouseDist = 160;
+        var mouseDist2 = mouseDist * mouseDist;
+        var r = brand[0], g = brand[1], b = brand[2];
+
+        for (var i = 0; i < particles.length; i++) {
+          var p = particles[i];
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < -20) p.x = w + 20; else if (p.x > w + 20) p.x = -20;
+          if (p.y < -20) p.y = h + 20; else if (p.y > h + 20) p.y = -20;
+
+          ctx.beginPath();
+          ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',0.55)';
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        for (var i2 = 0; i2 < particles.length; i2++) {
+          var a = particles[i2];
+          for (var j = i2 + 1; j < particles.length; j++) {
+            var c = particles[j];
+            var dx = a.x - c.x, dy = a.y - c.y;
+            var d2 = dx * dx + dy * dy;
+            if (d2 < linkDist2) {
+              var alpha = (1 - d2 / linkDist2) * 0.35;
+              ctx.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(c.x, c.y);
+              ctx.stroke();
+            }
+          }
+          if (mouse.active) {
+            var mdx = a.x - mouse.x, mdy = a.y - mouse.y;
+            var md2 = mdx * mdx + mdy * mdy;
+            if (md2 < mouseDist2) {
+              var mAlpha = (1 - md2 / mouseDist2) * 0.6;
+              ctx.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + mAlpha + ')';
+              ctx.lineWidth = 1.1;
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(mouse.x, mouse.y);
+              ctx.stroke();
+              var force = (1 - md2 / mouseDist2) * 0.04;
+              a.vx += (mdx / Math.sqrt(md2 || 1)) * force;
+              a.vy += (mdy / Math.sqrt(md2 || 1)) * force;
+            }
+          }
+          var speed = Math.sqrt(a.vx * a.vx + a.vy * a.vy);
+          if (speed > 1.2) { a.vx *= 0.96; a.vy *= 0.96; }
+        }
+
+        rafId = requestAnimationFrame(step);
+      }
+
+      function start() { if (rafId == null && visible) rafId = requestAnimationFrame(step); }
+      function stop() { if (rafId != null) { cancelAnimationFrame(rafId); rafId = null; } }
+
+      window.addEventListener('resize', function () { resize(); }, { passive: true });
+      window.addEventListener('pointermove', function (e) {
+        mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true;
+      }, { passive: true });
+      window.addEventListener('pointerleave', function () { mouse.active = false; });
+      window.addEventListener('blur', function () { mouse.active = false; });
+      document.addEventListener('visibilitychange', function () {
+        visible = !document.hidden;
+        if (visible) start(); else stop();
+      });
+
+      var observer = new MutationObserver(function () { brand = getBrandRGB(); });
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-mode'] });
+
+      resize();
+      start();
+    })();
+  </script>
 </body>
 </html>
