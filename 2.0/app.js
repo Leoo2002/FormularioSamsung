@@ -87,7 +87,7 @@ const configs = {
   apis: {
     previewLabel: "UNIFICADO · 22 columnas",
     defaultValues: {},
-    unusedColumns: [3, 8, 9, 20],
+    unusedColumns: [3, 20],
     columns: COLUMNS
   }
 };
@@ -96,6 +96,7 @@ const RING_CIRCUMFERENCE = 2 * Math.PI * 52; // r=52 in SVG
 
 let activeForm = "mktp";
 let validationModalResolver = null;
+let resetModalResolver = null;
 
 /* ---------- Utils ---------- */
 function limpiarTextoParaExcel(texto) {
@@ -187,7 +188,10 @@ function getChronologyValidationIssues() {
   }
   if (activeForm === "apis") {
     const recibido = getDateTimeValue("apis_fecha_ingreso", "apis_hora_ingreso");
+    const visto = getDateTimeValue("apis_fecha_vi", "apis_hora_vi");
     const respondido = getDateTimeValue("apis_fecha_respuesta", "apis_hora_respuesta");
+    if (recibido && visto && recibido >= visto) issues.push("La fecha y hora de recibido debe ser anterior a la fecha y hora en que lo vi.");
+    if (visto && respondido && visto >= respondido) issues.push("La fecha y hora en que lo vi debe ser anterior a la fecha y hora en que lo respondi.");
     if (recibido && respondido && recibido >= respondido) issues.push("La fecha y hora de recibido debe ser anterior a la fecha y hora en que lo respondi.");
   }
   return issues;
@@ -221,6 +225,24 @@ function showValidationModal(issues) {
   modal.setAttribute("aria-hidden", "false");
   requestAnimationFrame(() => confirmBtn.focus());
   return new Promise((resolve) => { validationModalResolver = resolve; });
+}
+
+function closeResetModal(shouldContinue) {
+  const modal = document.getElementById("reset-modal");
+  modal.classList.remove("is-open");
+  modal.setAttribute("aria-hidden", "true");
+  if (resetModalResolver) {
+    resetModalResolver(shouldContinue);
+    resetModalResolver = null;
+  }
+}
+function showResetModal() {
+  const modal = document.getElementById("reset-modal");
+  const cancelBtn = document.getElementById("reset-cancel");
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+  requestAnimationFrame(() => cancelBtn.focus());
+  return new Promise((resolve) => { resetModalResolver = resolve; });
 }
 
 /* ---------- Clipboard ---------- */
@@ -320,7 +342,8 @@ function getApisData() {
     obtenerSemana(fechaIngreso),
     formatearFechaLatina(fechaIngreso),
     formatearHora(document.getElementById("apis_hora_ingreso").value),
-    "", "",
+    formatearFechaLatina(document.getElementById("apis_fecha_vi").value),
+    formatearHora(document.getElementById("apis_hora_vi").value),
     formatearFechaLatina(document.getElementById("apis_fecha_respuesta").value),
     formatearHora(document.getElementById("apis_hora_respuesta").value),
     document.getElementById("apis_estado_reclamo").value,
@@ -509,6 +532,19 @@ function initValidationModal() {
   });
 }
 
+function initResetModal() {
+  const modal = document.getElementById("reset-modal");
+  if (!modal) return;
+  document.getElementById("reset-cancel").addEventListener("click", () => closeResetModal(false));
+  document.getElementById("reset-confirm").addEventListener("click", () => closeResetModal(true));
+  modal.querySelectorAll("[data-close]").forEach((el) => {
+    el.addEventListener("click", () => closeResetModal(false));
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("is-open")) closeResetModal(false);
+  });
+}
+
 /* ---------- Theme ---------- */
 const THEME_KEY = "cc:theme";
 function applyTheme(theme) {
@@ -542,11 +578,15 @@ function init() {
   initSelectDefaultLocks();
   initNumericOnlyInputs();
   initValidationModal();
+  initResetModal();
   initTabs();
   initLivePreview();
   initProgressRing();
   document.getElementById("btn-copiar").addEventListener("click", copiarFila);
-  document.getElementById("btn-limpiar").addEventListener("click", limpiarFormularioActivo);
+  document.getElementById("btn-limpiar").addEventListener("click", async () => {
+    const confirmar = await showResetModal();
+    if (confirmar) limpiarFormularioActivo();
+  });
   actualizarPreview();
 }
 

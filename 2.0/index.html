@@ -374,6 +374,14 @@
               <div class="input-wrap"><input id="apis_hora_ingreso" type="time" data-preview="true" /></div>
             </div>
             <div class="field span-6">
+              <label for="apis_fecha_vi">Fecha en que lo vi</label>
+              <div class="input-wrap"><input id="apis_fecha_vi" type="date" data-preview="true" /></div>
+            </div>
+            <div class="field span-6">
+              <label for="apis_hora_vi">Hora en que lo vi</label>
+              <div class="input-wrap"><input id="apis_hora_vi" type="time" data-preview="true" /></div>
+            </div>
+            <div class="field span-6">
               <label for="apis_fecha_respuesta">Fecha en que lo respondí</label>
               <div class="input-wrap"><input id="apis_fecha_respuesta" type="date" data-preview="true" /></div>
             </div>
@@ -527,6 +535,29 @@
       <footer class="modal__foot">
         <button id="validation-cancel" class="btn btn--ghost" type="button" data-close>Volver a corregir</button>
         <button id="validation-confirm" class="btn btn--primary" type="button">Copiar de igual manera</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Reset confirmation modal -->
+  <div id="reset-modal" class="modal modal--danger" aria-hidden="true">
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__card" role="dialog" aria-modal="true" aria-labelledby="reset-modal-title">
+      <header class="modal__head">
+        <div class="modal__icon modal__icon--danger">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M10 11v6M14 11v6"/></svg>
+        </div>
+        <div>
+          <h3 id="reset-modal-title">Limpiar formulario</h3>
+          <p>Esta acción borrará todos los campos cargados en la vista activa. No se puede deshacer.</p>
+        </div>
+      </header>
+      <div class="modal__body">
+        <p class="modal__hint">¿Querés continuar y limpiar el formulario?</p>
+      </div>
+      <footer class="modal__foot">
+        <button id="reset-cancel" class="btn btn--ghost" type="button" data-close>Cancelar</button>
+        <button id="reset-confirm" class="btn btn--danger" type="button">Sí, limpiar</button>
       </footer>
     </div>
   </div>
