@@ -53,9 +53,13 @@ const cascadeData = {
 };
 
 const COLUMNS = [
+  "API / CASILLA",
+  "GCIC",
+  "ESTADO DEL RECLAMO",
+  "ULTIMO COMENTARIO DEL SELLER.",
+  "FECHA DE REVISIÓN",
   "REF. PEDIDO.",
   "NOMBRE DE CLIENTE",
-  "GCIC",
   "ASUNTO",
   "TA",
   "Week",
@@ -65,29 +69,25 @@ const COLUMNS = [
   "Hora en que lo vi",
   "Fecha en que lo respondi",
   "Hora en que lo respondi",
-  "ESTADO DEL RECLAMO",
   "Agente",
   "Tipo de Solicitud",
   "Casuistica",
   "OBSERVACIONES",
-  "ULTIMO COMENTARIO DEL SELLER",
-  "FECHA DE REVISION",
   "SELLER",
-  "CANAL DE COMPRA",
-  "API / CASILLA"
+  "CANAL DE COMPRA"
 ];
 
 const configs = {
   mktp: {
     previewLabel: "UNIFICADO · 22 columnas",
     defaultValues: {},
-    unusedColumns: [0, 1, 2],
+    unusedColumns: [2, 5, 6],
     columns: COLUMNS
   },
   apis: {
     previewLabel: "UNIFICADO · 22 columnas",
     defaultValues: {},
-    unusedColumns: [3, 20],
+    unusedColumns: [7, 21],
     columns: COLUMNS
   }
 };
@@ -309,7 +309,13 @@ function getCasuistica(prefix) {
 function getMktpData() {
   const fecha = document.getElementById("mktp_fecha").value;
   return [
-    "", "", "",
+    document.getElementById("mktp_origen").value,
+    document.getElementById("mktp_estado").value,
+    "",
+    limpiarTextoParaExcel(document.getElementById("mktp_ultimo_comentario").value),
+    formatearFechaLatina(document.getElementById("mktp_revision").value),
+    "",
+    "",
     limpiarTextoParaExcel(document.getElementById("mktp_asunto").value),
     document.getElementById("mktp_ta").value,
     obtenerSemana(fecha),
@@ -319,24 +325,24 @@ function getMktpData() {
     formatearHora(document.getElementById("mktp_hora_vi").value),
     formatearFechaLatina(document.getElementById("mktp_fecha_respondi").value),
     formatearHora(document.getElementById("mktp_hora_respondi").value),
-    document.getElementById("mktp_estado").value,
     document.getElementById("mktp_agente").value,
     document.getElementById("mktp_tipo_solicitud").value,
     getCasuistica("mktp"),
     limpiarTextoParaExcel(document.getElementById("mktp_observacion").value),
-    limpiarTextoParaExcel(document.getElementById("mktp_ultimo_comentario").value),
-    formatearFechaLatina(document.getElementById("mktp_revision").value),
     document.getElementById("mktp_seller").value,
     document.getElementById("mktp_canal_compra").value,
-    document.getElementById("mktp_origen").value
   ];
 }
 function getApisData() {
   const fechaIngreso = document.getElementById("apis_fecha_ingreso").value;
   return [
+    document.getElementById("apis_origen").value,
+    document.getElementById("apis_gcic").value,
+    document.getElementById("apis_estado_reclamo").value,
+    limpiarTextoParaExcel(document.getElementById("apis_ultimo_comentario_seller").value),
+    formatearFechaLatina(document.getElementById("apis_fecha_revision").value),
     limpiarTextoParaExcel(document.getElementById("apis_ref_pedido").value),
     limpiarTextoParaExcel(document.getElementById("apis_nombre_cliente").value),
-    document.getElementById("apis_gcic").value,
     "",
     document.getElementById("apis_n_caso_gcic").value,
     obtenerSemana(fechaIngreso),
@@ -346,16 +352,12 @@ function getApisData() {
     formatearHora(document.getElementById("apis_hora_vi").value),
     formatearFechaLatina(document.getElementById("apis_fecha_respuesta").value),
     formatearHora(document.getElementById("apis_hora_respuesta").value),
-    document.getElementById("apis_estado_reclamo").value,
     document.getElementById("apis_agente").value,
     document.getElementById("apis_tipo_solicitud").value,
     getCasuistica("apis"),
     limpiarTextoParaExcel(document.getElementById("apis_observaciones").value),
-    limpiarTextoParaExcel(document.getElementById("apis_ultimo_comentario_seller").value),
-    formatearFechaLatina(document.getElementById("apis_fecha_revision").value),
     document.getElementById("apis_seller").value,
-    "",
-    document.getElementById("apis_origen").value
+    ""
   ];
 }
 function getActiveData() {
